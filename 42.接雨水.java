@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 class Solution {
-    public int trap(int[] height) { // 自己写的，贼烂，懒得看
+    public int trap1(int[] height) { // 自己写的，贼烂，懒得看
         int left = 0, right = height.length - 1;
         int sum = 0;
 
@@ -75,6 +75,26 @@ class Solution {
             } else {
                 ans += rightMax - height[right];
                 --right;
+            }
+        }
+        return ans;
+    }
+
+    public int trap(int[] height) {
+        int ans = 0;
+        int l = 0, r = height.length - 1;
+        int l_m = 0, r_m = 0;
+
+        while (l < r) {
+            l_m = Math.max(height[l], l_m);
+            r_m = Math.max(height[r], r_m);
+
+            if(l_m < r_m){
+                ans += l_m - height[l];
+                l++;
+            }else{
+                ans += r_m - height[r];
+                r--;
             }
         }
         return ans;

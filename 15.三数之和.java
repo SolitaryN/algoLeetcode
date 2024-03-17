@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class Solution {
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum1(int[] nums) {
         Arrays.sort(nums);// 排序，nums变成递增数组
         List<List<Integer>> res = new ArrayList<>();
         // k < nums.length - 2是为了保证后面还能存在两个数字
@@ -63,5 +65,42 @@ class Solution {
         }
 
         return res;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i] > 0 || i >= nums.length - 2)
+                break;
+            
+            // 必须是 -，不能是 +，如：-4,-1,-1,0,1,2
+            // 保证 a 在被去重之前，一定被使用过，即就算有 aa 或者 aaa都已经排查过了
+            if(i >= 1 && nums[i] == nums[i - 1]){
+                continue;
+            }
+            
+            int low = i + 1, high = nums.length - 1, target = 0 - nums[i];
+            while (low < high) {
+                int sum = nums[low] + nums[high];
+                if(target == sum){
+                    ArrayList<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[low]);
+                    list.add(nums[high]);
+                    ans.add(list);
+                    while (low < high && nums[low] == nums[low + 1]) {
+                        low++;
+                    }  // 对 c 去重
+                    low++;
+                }else if(target > sum){
+                    low++;
+                }else if(target < sum){
+                    high--;
+                }
+            }
+        }
+        return ans;
     }
 }

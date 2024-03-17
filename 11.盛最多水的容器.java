@@ -1,5 +1,5 @@
 class Solution {
-    public int maxArea(int[] height) {
+    public int maxArea1(int[] height) {
         int left = 0, right = height.length - 1;
         int max = (right - left) * (height[left] > height[right] ? height[right] : height[left]);
 
@@ -35,6 +35,22 @@ class Solution {
                 int temp = (right - left) * (Math.min(height[left], height[right]));
                 if (temp > max)
                     max = temp;
+            }
+        }
+
+        return max;
+    }
+    public int maxArea(int[] height) {
+        int left = 0, right = height.length - 1;
+        int max = 0;
+        while (right > left) {
+            int cur = Math.min(height[left], height[right]) * (right - left);
+            max = max < cur ? cur : max;
+
+            if(height[right] > height[left]){
+                left++;
+            }else{
+                right--;
             }
         }
 
