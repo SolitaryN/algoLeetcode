@@ -1,8 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+/*
+ * @lc app=leetcode.cn id=22 lang=java
+ *
+ * [22] 括号生成
+ */
 
+// @lc code=start
 class Solution {
     public List<String> generateParenthesis(int n) {
+        if(n == 0){
+            return new ArrayList<String>();
+        }
+
+        List<String> ans = new ArrayList<>();
+
+        helper_DFS(ans, "", 0, 0, n);
+        
+        return ans;
+    }
+
+    void helper_DFS(List<String> ans, String s, int l, int r, int all){
+        // assert r >= l; // 右括号数量大于等于左括号数量
+        if(l == all && r == all){
+            ans.add(s);
+            return;
+        }
+        if(r > l){ // 剪枝操作
+            return;
+        }
+
+        if(all > l){
+            helper_DFS(ans, s +"(", l + 1, r, all);
+        }
+        if(all > r){
+            helper_DFS(ans, s + ")", l, r + 1, all);
+        }
+    }
+
+    public List<String> generateParenthesis1(int n) {
         List<List<String>> total = new ArrayList<>();
         if(n == 0){
             return new ArrayList<>();
@@ -62,3 +96,5 @@ class Solution {
         }
     }
 }
+// @lc code=end
+
