@@ -62,11 +62,6 @@ class Solution2 {
             return myMap.size();
         return maxLen;
     }
-
-    public static void main(String[] args) {
-        Integer s = new Solution().lengthOfLongestSubstring("aab");
-        System.out.println(s);
-    }
 }
 
 /**

@@ -64,11 +64,15 @@ class Solution {
         ListNode H = new ListNode(-1);
         ListNode last = H;
 
-        Queue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode o1, ListNode o2) {
-                return o1.val - o2.val;
-            }
+        // Queue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
+        //     @Override
+        //     public int compare(ListNode o1, ListNode o2) {
+        //         return o1.val - o2.val;
+        //     }
+        // });
+
+        Queue<ListNode> queue = new PriorityQueue<>((o1, o2) ->{
+            return o1.val - o2.val;
         });
 
         for (int i = 0; i < lists.length; i++) {

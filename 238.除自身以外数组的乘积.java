@@ -6,6 +6,7 @@
 
 // @lc code=start
 class Solution {
+    // 笨方法
     public int[] productExceptSelf1(int[] nums) {
         int length = nums.length;
         int[] ans = new int[length];
@@ -37,7 +38,8 @@ class Solution {
 
     }
 
-    public int[] productExceptSelf(int[] nums) {
+    // 巧方法
+    public int[] productExceptSelf2(int[] nums) {
         int length = nums.length;
         
         int[] L = new int[length];
@@ -53,6 +55,31 @@ class Solution {
         }
 
         for (int i = 0; i < length; i++) {
+            ans[i] = L[i] * R[i];
+        }
+
+        return ans;
+    }
+
+
+    /*
+     * @date 20240730
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int len = nums.length;
+        int[] ans = new int[len];
+
+        int[] L = new int[len];
+        int[] R = new int[len];
+        L[0] = 1;
+        R[len - 1] = 1;
+
+        for (int i = 1; i < len; i++) {
+            L[i] = L[i - 1] * nums[i - 1];
+            R[len - 1 - i] = R[len - i] * nums[len - i];
+        }
+
+        for (int i = 0; i < len; i++) {
             ans[i] = L[i] * R[i];
         }
 

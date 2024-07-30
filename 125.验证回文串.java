@@ -43,7 +43,6 @@ class Solution {
         String b = sb.toString();
 
         return a.equals(b);
-
     }
 }
 // @lc code=end

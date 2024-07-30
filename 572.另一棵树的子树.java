@@ -22,7 +22,7 @@
  */
 class Solution {
     boolean ans = false;
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+    public boolean isSubtree1(TreeNode root, TreeNode subRoot) {
         if(subRoot == null)
             return true;
 
@@ -56,13 +56,28 @@ class Solution {
         }
     }
 
-    public boolean isSubtree1(TreeNode root, TreeNode subRoot) {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if(subRoot == null || helper(root, subRoot)) return true;
 
         if(root == null) return false;
 
         // 只要有一个树为 true，后续都为 true
         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    boolean helper2(TreeNode p, TreeNode q){
+        if(p == null && q == null){
+            return true;
+        }
+
+        boolean l, r;
+        if(p != null && q != null && q.val == p.val){
+            l = helper2(p.left, q.left);
+            r = helper2(p.right, q.right);
+            return l && r;
+        }
+
+        return false;
     }
 
 }

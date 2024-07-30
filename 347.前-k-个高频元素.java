@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
 import java.util.Map.Entry;
 
 class Solution {
-    public int[] topKFrequent1(int[] nums, int k) {
+    public int[] topKFrequent2(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
 
         for(int i : nums){
@@ -45,18 +45,19 @@ class Solution {
         return s;
     }
 
-    public int[] topKFrequent(int[] nums, int k) {
+    public int[] topKFrequent1(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int i : nums){
             map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        PriorityQueue<int []> queue = new PriorityQueue<>(new Comparator<int []>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[1] - o2[1];  // 建立小根堆
-            }
-        });
+        // PriorityQueue<int []> queue = new PriorityQueue<>(new Comparator<int []>() {
+        //     @Override
+        //     public int compare(int[] o1, int[] o2) {
+        //         return o1[1] - o2[1];  // 建立小根堆
+        //     }
+        // });
+        PriorityQueue<int []> queue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
         for(Entry<Integer, Integer> entry : map.entrySet()){
             int num = entry.getKey(), count = entry.getValue();
@@ -76,6 +77,41 @@ class Solution {
         }
         return ret;
     }
+
+    /*
+     * @date 20240729
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        // for (int i = 0; i < nums.length; i++) {
+        //     map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        // } // 这样写会报错，我也不知道为什么
+        for(int i : nums){
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        PriorityQueue<int []> littleQueue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
+        for (Entry<Integer, Integer> entry : map.entrySet()) {
+            int value = entry.getKey(), count = entry.getKey();
+
+            if (littleQueue.size() < k) {
+                littleQueue.offer(new int[]{value, count});
+            } else {
+                assert(littleQueue.size() == k);
+                if (littleQueue.peek()[1] < count) {
+                    littleQueue.poll();
+                    littleQueue.offer(new int[]{value, count});
+                }
+            }
+        }
+        
+        int[] ans = new int[k];
+        for (int i = 0; i < k; ++i) {
+            ans[i] = littleQueue.poll()[0];
+        }
+        return ans;
+    }
+
 }
 // @lc code=end
 

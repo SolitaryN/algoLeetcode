@@ -1,6 +1,4 @@
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 
 class Solution {
@@ -30,8 +28,9 @@ class Solution {
         }
         
         for (int i = s1Len; i < s2Len; i++) {
-            ++count2[s2.charAt(i) - 'a'];
+            ++count2[s2.charAt(i) - 'a'];  // 核心的两句
             --count2[s2.charAt(i - s1Len) - 'a'];
+
             if(Arrays.equals(count1, count2)){
                 return true;
             }

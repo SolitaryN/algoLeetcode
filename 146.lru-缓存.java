@@ -51,7 +51,6 @@ class LRUCache1 {
 }
 
 class LRUCache {
-
     Map<Integer, Integer> map;
     int capacity;
 
