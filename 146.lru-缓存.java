@@ -6,52 +6,37 @@
 
 // @lc code=start
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 class LRUCache1 {
-
     Map<Integer, Integer> map;
     int capacity;
-
     public LRUCache1(int capacity) {
         this.capacity = capacity;
-        map = new LinkedHashMap<>();
+        this.map = new HashMap<>();
     }
     
     public int get(int key) {
-        if(map.containsKey(key)){
-            makeRecent(key);
-            return map.get(key);
-        }
-        return -1;
+        return 0;
     }
     
     public void put(int key, int value) {
-        if(map.containsKey(key)){
-            map.put(key, value);
-            makeRecent(key);
-            return;
-        }
-        
-        if(map.size() == this.capacity){
-            int oldestKey = map.keySet().iterator().next(); //  双向链表中的第一个元素
-            map.remove(oldestKey);
-        }
-        map.put(key,value);
     }
 
-    void makeRecent(int key){
-        int val = map.get(key);
-        map.remove(key);
-        map.put(key, val);
+    void makeRecently(int key){
     }
 
-
+    void removeEldest() {
+    }
 }
 
+/*
+ * @date 20241001
+ */
 class LRUCache {
-    Map<Integer, Integer> map;
+    LinkedHashMap<Integer, Integer> map;
     int capacity;
 
     public LRUCache(int capacity) {
@@ -60,25 +45,18 @@ class LRUCache {
     }
     
     public int get(int key) {
-        if(map.containsKey(key)){
-            return map.get(key);
-        }
-        return -1;
+        return map.getOrDefault(key, -1);
     }
     
     public void put(int key, int value) {
-        if(map.containsKey(key)){
-            map.put(key, value);
-            map.get(key);
-            return;
-        }
+        map.put(key, value);
+        map.get(key);
         
-        if(map.size() == this.capacity){
-            int oldestKey = map.keySet().iterator().next(); //  双向链表中的第一个元素
+        if(map.size() > this.capacity){
+            //  双向链表中的第一个元素，如果开启LRU，则是最近最少访问的元素
+            int oldestKey = map.keySet().iterator().next();
             map.remove(oldestKey);
         }
-        map.put(key,value);
-        map.get(key);
     }
 
 }

@@ -5,8 +5,46 @@
  */
 
 // @lc code=start
+
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
+    /*
+     * @Date 20240805
+     * 使用回溯法 backtracking 解决，回溯法与dfs有所区别。
+     * 回溯法只能解决解空间为树的题目，同时需要伴随“剪枝操作”（也即规范限制）。
+     * 可简单理解回溯法为：树结构的 dfs + 剪枝操作
+     * dfs 主要针对的是图，树也是一种特殊的图。
+     */
     public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+
+        StringBuilder status = new StringBuilder();
+        backtrack(ans, 0, 0, n, status);
+
+        return ans;
+    }
+
+    public void backtrack(List<String> ans, int left, int right, int limit, StringBuilder sb) {
+        if (left == limit && right == limit) {
+            ans.add(sb.toString());
+        }
+
+        if (left < limit && left >= right) {
+            sb.append("(");
+            backtrack(ans, left + 1, right, limit, sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        if (right < limit && left > right) {
+            sb.append(")");
+            backtrack(ans, left, right + 1, limit, sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+    public List<String> generateParenthesis4(int n) {
         if(n == 0){
             return new ArrayList<String>();
         }

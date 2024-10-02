@@ -16,55 +16,77 @@
  * }
  */
 class Solution {
+    /*
+     * @date 20240926
+     * 可以使用单链表后序遍历处理，不过函数压栈带来的空间复杂度
+     * 在 isPalindrome1 中优化空间复杂度，使用快慢指针
+     */
+    ListNode left;
+    boolean ans = true;
+
     public boolean isPalindrome(ListNode head) {
-        if (head == null) {
-            return true;
-        }
-
-        // 找到前半部分链表的尾节点并反转后半部分链表
-        ListNode firstHalfEnd = endOfFirstHalf(head);
-        ListNode secondHalfStart = reverseList(firstHalfEnd.next);
-
-        // 判断是否回文
-        ListNode p1 = head;
-        ListNode p2 = secondHalfStart;
-        boolean result = true;
-        while (result && p2 != null) {
-            if (p1.val != p2.val) {
-                result = false;
-            }
-            p1 = p1.next;
-            p2 = p2.next;
-        }        
-
-        // 还原链表并返回结果
-        firstHalfEnd.next = reverseList(secondHalfStart);
-        return result;
-
+        left = head;
+        traverse(head);
+        return ans;
     }
 
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
-        while (curr != null) {
-            ListNode nextTemp = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextTemp;
+    /*
+     * 后序遍历链表
+     * https://labuladong.online/algo/data-structure/palindrome-linked-list/#%E4%B8%80%E3%80%81%E5%88%A4%E6%96%AD%E5%9B%9E%E6%96%87%E5%8D%95%E9%93%BE%E8%A1%A8
+     */
+    public void traverse(ListNode head) {
+        if (head == null) return;
+
+        traverse(head.next);
+
+        if (head.val != left.val) {
+            ans = false;
         }
-        return prev;
+        left = left.next;
     }
 
-    private ListNode endOfFirstHalf(ListNode head) {
-        ListNode fast = head;
-        ListNode slow = head;
-        while (fast.next != null && fast.next.next != null) {
+    public boolean isPalindrome1(ListNode head) {
+        ListNode slow, fast;
+        slow = fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
             fast = fast.next.next;
+        }
+
+        /*
+         * 如果 fast 不为 null，此时节点数量为奇数
+         * 此时 slow 再往下走一步，虽然没必要，不过这样最模板，有时候需要这样
+         */
+        if (fast != null) {
             slow = slow.next;
         }
-        return slow;
+
+        ListNode tail = reverse(slow);
+
+        while (tail != null) {
+            if (tail.val != head.val) return false;
+            tail = tail.next;
+            head = head.next;
+        }
+
+        return true;
     }
 
+    ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        ListNode curr = head;
+        ListNode next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+
+        return pre;
+    }
 }
 // @lc code=end
 

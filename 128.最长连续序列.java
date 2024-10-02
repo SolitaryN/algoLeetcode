@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 class Solution {
     public int longestConsecutive1(int[] nums) {
@@ -62,7 +63,7 @@ class Solution {
         return maxNum;
     }
 
-    public int longestConsecutive(int[] nums) {
+    public int longestConsecutive3(int[] nums) {
         HashSet<Integer> set = new HashSet<>();
         for(int i : nums){
             set.add(i);
@@ -83,6 +84,33 @@ class Solution {
             longest = Math.max(cur_long, longest);
         }
 
+        return longest;
+    }
+
+    /*
+     * @date 20240731
+     * @desc 时间复杂度和空间复杂度都是 O(n)
+     */
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>(); // 去重
+        for (int i : nums) {
+            set.add(i);
+        }
+
+        int longest = 0;
+        for (int i : set) {
+            if (set.contains(i - 1)) { // 开始进行下一步之前，必须确保元素是序列的开头
+                continue;
+            }
+
+            int now_long = 1;
+            int head = i;
+            while (set.contains(head + 1)) {
+                now_long += 1;
+                head += 1;
+            }
+            longest = Math.max(longest, now_long);
+        }
         return longest;
     }
 }

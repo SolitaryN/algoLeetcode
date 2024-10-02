@@ -44,7 +44,7 @@ class Solution {
         return stack.size();
     }
 
-    public int carFleet(int target, int[] position, int[] speed) {
+    public int carFleet2(int target, int[] position, int[] speed) {
         if(position.length == 1){
             return 1;
         }
@@ -55,7 +55,7 @@ class Solution {
             combine[i][1] = speed[i];
         }
 
-        // 从大到小排序
+        // 从大到小排序,倒序
         PriorityQueue<int[]> queue = new PriorityQueue<>((o1, o2) -> o2[0] - o1[0]);
         // queue.addAll(combine); // 语法错误不可这样用，combine不是Collection类型的子类
         for (int i = 0; i < combine.length; i++) {
@@ -79,6 +79,32 @@ class Solution {
         }
         return ans;
     }
+
+
+    /*
+     * @date 20240817
+     */
+    public int carFleet(int target, int[] position, int[] speed) {
+        int N = position.length;
+        int[][] comb = new int[N][2];
+        for (int i = 0; i < N; i++) {
+            comb[i][0] = position[i];
+            comb[i][1] = speed[i];
+        }
+        Arrays.sort(comb, (o1, o2) -> o2[0] - o1[0]);
+
+        Stack<Double> stack  = new Stack<>();
+        for (int i = 0; i < N; i++) {
+            double currTime = ((double)target - comb[i][0]) / comb[i][1];
+            if (!stack.isEmpty() && stack.peek() >= currTime) {
+                continue;
+            } else {
+                stack.push(currTime);
+            }
+        }
+        return stack.size();
+    }
+
 }
 // @lc code=end
 

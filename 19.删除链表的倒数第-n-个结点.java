@@ -15,28 +15,27 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
 class Solution {
+    /*
+     * @date 20240930
+     */
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode l1 = head;
-        ListNode l2 = head;
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode first = dummy, second = dummy;
 
-        int i = 0;
-        while(i < n && l1 != null){
-            l1 = l1.next;
-            i++;
+        for (int i = 0; i < n; ++i) {
+            first = first.next;
         }
 
-        if(l1 == null){
-            return head.next;
+        while (first.next != null) {
+            first = first.next;
+            second = second.next;
         }
 
-        while(l1.next != null){
-            l1 = l1.next;
-            l2 = l2.next;
-        }
-
-        l2.next = l2.next.next;
-        return head;
+        second.next = second.next.next;
+        return dummy.next;
     }
 }
 // @lc code=end

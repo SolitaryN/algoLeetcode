@@ -6,10 +6,13 @@
 
 // @lc code=start
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
 
 /**
  * Definition for a binary tree node.
@@ -27,31 +30,30 @@ import java.util.Queue;
  * }
  */
 class Solution {
+    /*
+     * @date 20241002
+     * 这里注意一定要提前保留 size，避免逻辑错误，避免使用queue.size直接进行循环判断
+     */
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if(root == null){
-            return ans;
-        }
+        if (root == null)
+            return  Collections.emptyList();
 
-        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
         queue.offer(root);
+        List<List<Integer>> ans = new ArrayList<>();
 
-        while(!queue.isEmpty()){
-            int levelSize = queue.size();
-
+        while (!queue.isEmpty()) {
+            int size = queue.size();
             List<Integer> level = new ArrayList<>();
-            for (int i = 0; i < levelSize; i++) {
-                TreeNode temp = queue.poll();
-                level.add(temp.val);
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null)  queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
 
-                if(temp.left != null)
-                    queue.offer(temp.left);
-                if(temp.right != null)
-                    queue.offer(temp.right);
+                level.add(node.val);
             }
             ans.add(level);
         }
-
         return ans;
     }
 }

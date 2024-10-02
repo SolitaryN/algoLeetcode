@@ -23,22 +23,24 @@
  * }
  */
 class Solution {
+    /*
+     * @date 20241002
+     */
     public boolean isSymmetric(TreeNode root) {
-        if(root == null) return true;
+        if(root == null)
+            return true;
 
         return helper(root.left, root.right);
     }
 
     boolean helper(TreeNode l, TreeNode r){
         if(l == null && r == null) return true;
-        if(l == null || r == null) return false;
+        if(l == null || r == null) return false; // 经过上面过滤，下面若有null
 
-        if(l.val != r.val)  return false;
+        if(l.val != r.val)
+            return false;
 
-        boolean a = helper(l.right, r.left);
-        boolean b = helper(l.left, r.right);
-
-        return a && b;
+        return helper(l.right, r.left) && helper(l.left, r.right);
     }
 }
 // @lc code=end

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution {
-    public boolean isValidSudoku(char[][] board) {
+    public boolean isValidSudoku1(char[][] board) {
         Set<Character> set_line = new HashSet<>();
         Set<Character> set_colomn = new HashSet<>();
 
@@ -58,6 +58,50 @@ class Solution {
                     return false;
 
                 set.add(board[i][j]);
+            }
+        }
+        return true;
+    }
+
+
+    /*
+     * @date 20240730
+     */
+
+    public boolean isValidSudoku(char[][] board) {
+        Set<Character> line = new HashSet<>();
+        Set<Character> colomn = new HashSet<>();
+
+        for (int i = 0; i < 9; i++) { // colomn
+            colomn.clear();
+            for (int j = 0; j < 9; j++) { // line
+                if (board[j][i] != '.' && colomn.contains(board[j][i])) {
+                    return false;
+                } 
+                if (board[j][i] != '.') {
+                    colomn.add(board[j][i]);
+                }
+            }
+        }
+
+        for (int i = 0; i < 9; i++) { // line
+            line.clear();
+            for (int j = 0; j < 9; j++) { // colomn
+                if (board[i][j] != '.' && line.contains(board[i][j])) {
+                    return false;
+                }
+                if (board[i][j] != '.') {
+                    line.add(board[i][j]);
+                }
+            }
+            
+        }
+
+        for (int i = 0; i < board.length; i += 3) {
+            for (int j = 0; j < board.length; j += 3) {
+                if(!validSquare(board, i, j, i + 2, j + 2)){
+                    return false;
+                }
             }
         }
         return true;

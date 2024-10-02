@@ -16,24 +16,10 @@
  * }
  */
 class Solution {
-    public ListNode reverseList1(ListNode head) {
-        if(head == null)
-            return null;
-
-        ListNode pre = null, cursor, next;
-        cursor = head;
-        
-        while(cursor != null){
-            next = cursor.next;
-            cursor.next = pre;
-            pre = cursor;
-            cursor = next;
-        }
-
-        return pre;
-    }
-
-
+    /*
+     * @date 20240926
+     * 链表反转问题，此时需要三个指针，指向 pre、curr、next，返回 pre
+     */
     public ListNode reverseList(ListNode head) {
         ListNode curr = head;
         ListNode pre = null;
@@ -42,7 +28,7 @@ class Solution {
             ListNode next = curr.next;
             curr.next = pre;
             pre = curr;
-        curr = next;
+            curr = next;
         }
 
         return pre;

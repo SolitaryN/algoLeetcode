@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 class Solution {
-    public int[] dailyTemperatures1(int[] temperatures) {
+    public int[] dailyTemperatures2(int[] temperatures) {
         int[] ans = new int[temperatures.length];
         Arrays.fill(ans, 0);
 
@@ -28,11 +28,10 @@ class Solution {
     }
 
     // 单调栈问题：单调递减栈用来求右边第一个更大的元素，递增栈则是右边第一个更小的元素
-    public int[] dailyTemperatures(int[] temperatures) {
+    public int[] dailyTemperatures1(int[] temperatures) {
         int[] ans = new int[temperatures.length];
         Stack<Integer> stack = new Stack<>();
         Arrays.fill(ans, 0);
-
         for (int i = 0; i < temperatures.length; i++) {
             while(!stack.isEmpty() 
                 && temperatures[i] > temperatures[stack.peek()]){
@@ -40,7 +39,25 @@ class Solution {
             }
             stack.push(i);
         }
+        return ans;
+    }
 
+    /*
+     * @date 20240814
+     */
+    public int[] dailyTemperatures(int[] temperatures) {
+        int[] ans = new int[temperatures.length];
+        Arrays.fill(ans, 0); // init
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < temperatures.length; i++) {
+            while (!stack.isEmpty() && 
+                temperatures[stack.peek()] < temperatures[i]) {
+                    int index = stack.pop();
+                    ans[index] = i - index;
+            }
+            
+            stack.push(i);
+        }
         return ans;
     }
 }

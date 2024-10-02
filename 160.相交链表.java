@@ -20,62 +20,24 @@ import java.util.HashSet;
  *     }
  * }
  */
-public class Solution {
-    public ListNode getIntersectionNode1(ListNode headA, ListNode headB) {
-        Set<ListNode> set = new HashSet<>();
-
-        while(headA != null && headB != null){
-            if(!set.contains(headA)){
-                set.add(headA);
-                headA = headA.next;
-            }else{
-                return headA;
-            }
-
-            if(!set.contains(headB)){
-                set.add(headB);
-                headB = headB.next;
-            }else{
-                return headB;
-            }
-        }
-        while (headA != null) {
-            if(!set.contains(headA)){
-                set.add(headA);
-                headA = headA.next;
-            }else{
-                return headA;
-            }
-        }
-
-        while (headB != null) {
-            if(!set.contains(headB)){
-                set.add(headB);
-                headB = headB.next;
-            }else{
-                return headB;
-            }
-        }
-
-        return null;
-    }
-
+class Solution {
+    /*
+     * @date 20240926
+     * 双指针问题
+     * 从路程的角度出发 m + k + n = n + k + m，此时就算它们不相交，最后走到的都是null，相等退出循环
+     */
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA == null || headB == null) return null;
 
         ListNode currA = headA;
         ListNode currB = headB;
 
-        while(headA != null || headB != null){
-            if(headA == headB){
-                return headA;
-            }
-
-            headA = (headA == null)? currA : headA.next;
-            headB = (headB == null)? currB : headB.next;
+        while(headA != headB){
+            headA = (headA == null)? currB : headA.next;
+            headB = (headB == null)? currA : headB.next;
         }
 
-        return null;
+        return headA;
     }
 }
 // @lc code=end

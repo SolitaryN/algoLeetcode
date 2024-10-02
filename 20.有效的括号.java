@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Stack;
 
 class Solution {
-    public boolean isValid(String s) {
+    public boolean isValid2(String s) {
         Stack<Character> stack = new Stack<>();
 
         char[] cs = s.toCharArray();
@@ -63,6 +63,59 @@ class Solution {
 
         return stack.isEmpty();
     }
+
+    /*
+     * @date 20240801
+     */
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        char[] str = s.toCharArray();
+
+        for (char c : str) {
+            if (isLeft(c)) {
+                stack.push(c);
+            }
+
+            if (isRight(c)) {
+                if (stack.size() > 0) {
+                    char left = stack.pop();
+                    if (!isPair(left, c)) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
+    }
+
+    Boolean isLeft(char c) {
+        if (c == '[' || c == '(' || c == '{') {
+            return true;
+        }
+        return false;
+    }
+
+    Boolean isRight(char c) {
+        if (c == ')' || c == ']' || c =='}') {
+            return true;
+        } 
+        return false;
+    }
+
+    Boolean isPair(char left, char right) {
+        if (left == '[' && right == ']')
+            return true;
+        if (left == '(' && right == ')')
+            return true;
+        if (left == '{' && right == '}')
+            return true;
+        
+        return false;
+    }
+
 }
 // @lc code=end
 

@@ -17,26 +17,31 @@
  * }
  */
 public class Solution {
+    /*
+     * @date 20240926
+     */
     public ListNode detectCycle(ListNode head) {
-        if(head == null)
-            return null;
+        if(head == null) return null;
 
-        ListNode slow = head, fast = head;
-        do{
+        ListNode slow, fast;
+        slow = fast = head;
+        while (fast != null && fast.next != null) {
             slow = slow.next;
-            if(fast.next != null && fast.next.next != null){
-                fast = fast.next.next;
-            }else{
-                return null;
+            fast = fast.next.next;
+
+            // 有环
+            if (slow == fast) {
+                slow = head;
+                while(slow != fast){
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
             }
-        }while(slow != fast);
-
-        slow = head;
-        while(slow != fast){
-            slow = slow.next;
-            fast = fast.next;
         }
-        return slow;
+
+        // 无环
+        return null;
     }
 }
 // @lc code=end

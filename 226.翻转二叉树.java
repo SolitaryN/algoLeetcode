@@ -21,10 +21,12 @@
  * }
  */
 class Solution {
+    /*
+     * @date 20241002
+     */
     public TreeNode invertTree1(TreeNode root) {
-        if(root == null){
+        if(root == null)
             return root;
-        }
 
         invertTree(root.left);
         invertTree(root.right);
@@ -32,20 +34,6 @@ class Solution {
         TreeNode temp = root.left;
         root.left = root.right;
         root.right = temp;
-        return root;
-    }
-
-    public TreeNode invertTree(TreeNode root) {
-        if(root == null){
-            return null;
-        }
-        invertTree(root.left);
-        invertTree(root.right);
-
-        TreeNode temp = root.left;
-        root.left = root.right;
-        root.right = temp;
-
         return root;
     }
 }

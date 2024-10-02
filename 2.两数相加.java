@@ -19,106 +19,30 @@ import java.nio.file.LinkOption;
  * }
  */
 class Solution {
+    /*
+     * @date 20240930
+     * 注意，返回值不会算入到空间复杂度里面，所以说这里空间复杂度为o(1)
+     */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if(l1 == null || l2 == null){
-            return l1 == null? l2 : l1;
+        if (l1 == null || l2 == null)
+            return l1 == null ? l2 : l1;
+
+        ListNode dummy = new ListNode();
+        ListNode curr = dummy;
+
+        int carry = 0; // 表示进位 carry
+        while (l1 != null || l2 != null || carry == 1) {
+            int v1 = l1 == null ? 0 : l1.val;
+            int v2 = l2 == null ? 0 : l2.val;
+            int res = v1 + v2 + carry;
+            carry = res / 10;
+            res = res % 10;
+            curr.next = new ListNode(res);
+            curr = curr.next;
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
         }
-
-        int carry = 0;
-
-        ListNode resHead = new ListNode(-1);
-        ListNode curr1 = l1;
-        ListNode curr2 = l2;
-        ListNode temp = resHead;
-        while(curr1 != null && curr2 != null){
-            int sum = curr1.val + curr2.val + carry;
-            carry = sum / 10;
-
-            temp.next = new ListNode(sum % 10);
-            temp = temp.next;
-
-            curr1 = curr1.next;
-            curr2 = curr2.next;
-        }
-
-        while(curr1 != null){
-            int sum = curr1.val + carry;
-            carry = sum / 10;
-
-            temp.next = new ListNode(sum % 10);
-            temp = temp.next;
-
-            curr1 = curr1.next;
-        }
-
-        while(curr2 != null){
-            int sum = curr2.val + carry;
-            carry = sum / 10;
-
-            temp.next = new ListNode(sum % 10);
-            temp = temp.next;
-
-            curr2 = curr2.next;
-        }
-
-        if(carry == 1){
-            temp.next = new ListNode(1);
-        }
-
-        return resHead.next;
-    }
-
-    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
-        if(l1 == null || l2 == null){
-            return l1 == null? l2 : l1;
-        }
-
-        int carry = 0;
-
-        ListNode resHead = new ListNode(-1);
-        ListNode curr1 = l1;
-        ListNode curr2 = l2;
-        ListNode temp = resHead;
-        while(curr1 != null && curr2 != null){
-            int sum = curr1.val + curr2.val + carry;
-            carry = sum / 10;
-
-            temp.next = new ListNode(sum % 10);
-            temp = temp.next;
-
-            curr1 = curr1.next;
-            curr2 = curr2.next;
-        }
-
-        if(curr1 != null){
-            temp.next = helper(curr1, carry);
-        }
-        if(curr2 != null){
-            temp.next = helper(curr2, carry);
-        }
-        if(curr1 == null && curr2 == null && carry == 1){
-            temp.next = new ListNode(1);
-        }
-
-        return resHead.next;
-    }
-
-    ListNode helper(ListNode l, int carry){
-        ListNode resH = new ListNode(-1);
-        ListNode temp = resH;
-
-        while(l != null){
-            int sum = l.val + carry;
-            carry = sum / 10;
-            temp.next = new ListNode(sum % 10);
-            temp = temp.next;
-            l = l.next;
-        }
-
-        if(carry == 1){
-            temp.next = new ListNode(1);
-        }
-        return resH.next;
+        return dummy.next;
     }
 }
 // @lc code=end
