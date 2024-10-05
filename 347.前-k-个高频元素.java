@@ -5,113 +5,40 @@
  */
 
 // @lc code=start
-
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Map.Entry;
 
 class Solution {
-    public int[] topKFrequent2(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for(int i : nums){
-            int num = map.getOrDefault(i, 0);
-            map.put(i, num + 1);
-        }
-        
-        List<int[]> list = new ArrayList<>();
-        for(Entry<Integer, Integer> entry : map.entrySet()){
-            Integer key = entry.getKey();
-            Integer value = entry.getValue();
-            list.add(new int[]{key, value});
-        }
-
-        list.sort(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o2[1] - o1[1];  // 降序排序
-                // return o1[1] - o2[1];  // 升序排序
-            }
-        });
-
-        int[] s = new int[k];
-        for (int i = 0; i < k; i++) {
-            s[i] = list.get(i)[0];
-        }
-        return s;
-    }
-
-    public int[] topKFrequent1(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for(int i : nums){
-            map.put(i, map.getOrDefault(i, 0) + 1);
-        }
-
-        // PriorityQueue<int []> queue = new PriorityQueue<>(new Comparator<int []>() {
-        //     @Override
-        //     public int compare(int[] o1, int[] o2) {
-        //         return o1[1] - o2[1];  // 建立小根堆
-        //     }
-        // });
-        PriorityQueue<int []> queue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
-
-        for(Entry<Integer, Integer> entry : map.entrySet()){
-            int num = entry.getKey(), count = entry.getValue();
-            if(queue.size() == k){
-                if(queue.peek()[1] < count){
-                    queue.poll();
-                    queue.offer(new int[]{num, count});
-                }
-            }else{
-                    queue.offer(new int[]{num, count});
-            }
-        }
-
-        int[] ret = new int[k];
-        for (int i = 0; i < k; i++) {
-            ret[i] = queue.poll()[0];
-        }
-        return ret;
-    }
-
     /*
-     * @date 20240729
+     * @date 20241005
+     * 使用小根堆求解最高频的 k 个元素
+     * 注意，尽量使用 Arrays.stream，而不是 Stream.of，后者是可变参数列表
      */
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
-        // for (int i = 0; i < nums.length; i++) {
-        //     map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-        // } // 这样写会报错，我也不知道为什么
-        for(int i : nums){
-            map.put(i, map.getOrDefault(i, 0) + 1);
+        Arrays.stream(nums).forEach(e -> {
+            map.put(e, map.getOrDefault(e, 0) + 1);
+        });
+
+        int num = 0;
+        Queue<int[]> queue = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        for (Entry<Integer, Integer> e : map.entrySet()) {
+            int[] element = new int[] {e.getKey(), e.getValue()};
+            queue.offer(element);
+            ++num;
+            if (num > k)
+                queue.poll();
         }
 
-        PriorityQueue<int []> littleQueue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
-        for (Entry<Integer, Integer> entry : map.entrySet()) {
-            int value = entry.getKey(), count = entry.getKey();
-
-            if (littleQueue.size() < k) {
-                littleQueue.offer(new int[]{value, count});
-            } else {
-                assert(littleQueue.size() == k);
-                if (littleQueue.peek()[1] < count) {
-                    littleQueue.poll();
-                    littleQueue.offer(new int[]{value, count});
-                }
-            }
-        }
-        
         int[] ans = new int[k];
-        for (int i = 0; i < k; ++i) {
-            ans[i] = littleQueue.poll()[0];
-        }
+        for (int i = 0; i < ans.length; i++)
+            ans[i] = queue.poll()[0];
         return ans;
     }
-
 }
 // @lc code=end
 

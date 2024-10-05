@@ -11,98 +11,53 @@ import java.util.Map;
 import java.util.Stack;
 
 class Solution {
-    public boolean isValid2(String s) {
-        Stack<Character> stack = new Stack<>();
-
-        char[] cs = s.toCharArray();
-
-        for(char c : cs){
-            if(c == '{' || c == '[' || c == '('){
-                stack.add(c);
-            }else{
-                Character temp = ' ';
-                if(c == '}'){
-                    temp = '{';
-                }else if(c == ']'){
-                    temp = '[';
-                }else if(c == ')'){
-                    temp = '(';
-                }
-
-                if(stack.isEmpty() || !(stack.peek() == temp)){
-                    return false;
-                }
-                stack.pop();
-            }
-        }
-
-        return stack.empty()?true:false;
-    }
-
     public boolean isValid1(String s) {
         Map<Character, Character> map = new HashMap<>();
         map.put('}', '{');
         map.put(']', '[');
         map.put(')', '(');
-
-        if(s.length() % 2 == 1)
-            return false;
         
         Stack<Character> stack = new Stack<>();
-        char[] ca = s.toCharArray();
-        for(char c : ca){
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
             if(map.containsKey(c)){
-                if(stack.isEmpty() || map.get(c) != stack.peek()){
+                if(stack.isEmpty() || map.get(c) != stack.peek())
                     return false;
-                }
                 stack.pop();
             }else{
-                stack.add(c);
-            }
-        }
-
-        return stack.isEmpty();
-    }
-
-    /*
-     * @date 20240801
-     */
-    public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        char[] str = s.toCharArray();
-
-        for (char c : str) {
-            if (isLeft(c)) {
                 stack.push(c);
             }
-
-            if (isRight(c)) {
-                if (stack.size() > 0) {
-                    char left = stack.pop();
-                    if (!isPair(left, c)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
         }
-
         return stack.isEmpty();
     }
 
-    Boolean isLeft(char c) {
-        if (c == '[' || c == '(' || c == '{') {
-            return true;
-        }
-        return false;
-    }
 
-    Boolean isRight(char c) {
-        if (c == ')' || c == ']' || c =='}') {
-            return true;
-        } 
-        return false;
+    /*
+     * @date 20241005
+     * 注意判断是否成对的时候，传入的左右括号值
+     */
+    public boolean isValid(String s) {
+        if(s.length() % 2 == 1)
+            return false;
+
+        Stack<Character> stack = new Stack<>();
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty())
+                    return false;
+
+                char p = stack.pop();
+                if (!isPair(p, c))
+                    return false;
+            }
+        }
+        return stack.isEmpty();
     }
 
     Boolean isPair(char left, char right) {
@@ -112,10 +67,7 @@ class Solution {
             return true;
         if (left == '{' && right == '}')
             return true;
-        
         return false;
     }
-
 }
 // @lc code=end
-

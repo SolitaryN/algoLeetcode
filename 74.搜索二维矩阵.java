@@ -6,26 +6,60 @@
 
 // @lc code=start
 class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix.length == 0)
-            return false;
 
-        int l = matrix.length, c = matrix[0].length;
-        int i = 0, j = 0;
-        while (i < l && j < c) {
-            if(matrix[i][j] == target){
+    /*
+     * @date 20241005
+     * 二分查找，两种查法，一次二分查找 和 两次二分查找
+     * 下面是两次二分查找
+     */
+    public boolean searchMatrix1(int[][] matrix, int target) {
+        int line = matrix.length, column = matrix[0].length;
+        // 先查第一列
+        int begin = 0, end = line - 1;
+        while (end >= begin) {
+            int mid = begin + (end - begin) / 2;
+            if(matrix[mid][0] == target)
                 return true;
-            }else if(matrix[i][j] > target){
-                return false; // 出现这种情况，说明没有这个元素
-            }
-
-            if(i + 1 < l && matrix[i + 1][j] <= target){
-                i++;  // 先往下查
-            }else{
-                j++;  // 再往右查
-            }
+            if (matrix[mid][0] > target)
+                end = mid - 1;
+            else 
+                begin = mid + 1;
         }
 
+        if (end < 0) return false; // 如果要查的行不存在，则返回，此时 end 为 -1
+
+        // 此时end为要查找的行
+        int left = 0, right = column - 1;
+        while (right >= left) {
+            int mid = left + (right - left) / 2;
+            if (matrix[end][mid] == target)
+                return true;
+            if (matrix[end][mid] > target)
+                right = mid - 1;
+            else 
+                left = mid + 1;
+        }
+
+        return false;
+    }
+
+    /*
+     * @date 20241005 
+     * 一次二分查找
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int line = matrix.length, column = matrix[0].length;
+        int low = 0, high = line * column - 1;
+
+        while (high >= low) {
+            int mid = low + (high - low) / 2;
+            if (matrix[mid/column][mid%column] == target)
+                return true;
+            if (matrix[mid/column][mid%column] < target)
+                low = mid + 1;
+            else 
+                high = mid - 1;
+        }
         return false;
     }
 }

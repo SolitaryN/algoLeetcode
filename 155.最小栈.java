@@ -9,11 +9,10 @@
 import java.util.Stack;
 
 /*
- * @date 20240801
+ * @date 20240801 20241005
  * 类似于使用状态机一样，保存每次压栈之后，此时栈中的最小元素
  */
 class MinStack {
-
     Stack<Integer> stack;
     Stack<Integer> min;
 
@@ -41,14 +40,5 @@ class MinStack {
         return min.peek();
     }
 }
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
 // @lc code=end
 

@@ -7,6 +7,7 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -30,55 +31,58 @@ import java.util.Queue;
  * }
  */
 class Solution {
+    /*
+     * @date 20241003
+     * 两种解法，BFS 和 DFS
+     */
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-
         if(root == null)
-            return ans;
-        
-        // helpDFS(root, 0, ans);
-        helpBFS(root, ans);
+            return Collections.emptyList();
+
+        List<Integer> ans = new ArrayList<>();
+        // dfs(root, 0, ans);
+        bfs(root, ans);
 
         return ans;
-        
     }
 
-    void helpDFS(TreeNode root, int depth, List<Integer> ans){
-        if(root == null){
+    /*
+     * @date 20241003
+     * 每次都尽力先往右边走，再往左边走，使用size和depth的关系收割结果
+     */
+    void dfs(TreeNode root, int depth, List<Integer> ans){
+        if(root == null)
             return;
-        }
 
-        if(depth == ans.size()){
+        if(depth == ans.size())
             ans.add(root.val);
-        }
 
         depth += 1;
-        helpDFS(root.right, depth, ans);
-        helpDFS(root.left, depth, ans);
+        dfs(root.right, depth, ans);
+        dfs(root.left, depth, ans);
     }
 
-    void helpBFS(TreeNode root, List<Integer> ans){
+    /*
+     * @date 20241003
+     * 注意层次遍历中的 size，需要提前保存
+     */
+    void bfs(TreeNode root, List<Integer> ans){
         Queue<TreeNode> queue = new LinkedList<>();
 
-        if(root != null){
+        if(root != null)
             queue.offer(root);
-        }
-
         
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
-            // for (int i = 0; i < queue.size(); i++) { // 注意这里不能用 queue.size，它的大小在算法执行时动态变化
             for (int i = 0; i < levelSize; i++) {
-                TreeNode temp = queue.poll();
-                if(i == 0){
-                    ans.add(temp.val);
-                }
-                if(temp.right != null){
-                    queue.offer(temp.right);
-                }
-                if(temp.left != null){
-                    queue.offer(temp.left);
-                }
+                TreeNode node = queue.poll();
+                if(i == levelSize - 1)
+                    ans.add(node.val);
+
+                if(node.left != null)
+                    queue.offer(node.left);
+                if(node.right != null)
+                    queue.offer(node.right);
             }
         }
     }

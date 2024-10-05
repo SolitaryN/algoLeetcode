@@ -1,82 +1,89 @@
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 //Definition for a binary tree node.
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
+// class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode() {}
+//     TreeNode(int val) { this.val = val; }
+//     TreeNode(int val, TreeNode left, TreeNode right) {
+//         this.val = val;
+//         this.left = left;
+//         this.right = right;
+//     }
+// }
 
+/*
+ * @date 20241003
+ * 下面两种写法都一样，区别就是保存index的方式稍有不同，一个成员遍历，一个局部变量
+ */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        HashMap<Integer, Integer> indexOfIn = new HashMap<>();
-        int length = preorder.length;
-        for (int i = 0; i < inorder.length; i++) {
-            indexOfIn.put(inorder[i], i);
-        }
-        return myBuild(preorder, inorder, 0, length - 1, 0, length - 1, indexOfIn);
+        Map<Integer, Integer> indexOfIn = new HashMap<>();
+
+        IntStream.range(0, inorder.length)
+            .forEach(index -> indexOfIn.put(inorder[index], index));
+
+        return myBuild(preorder, inorder, 0, preorder.length - 1,
+            0, inorder.length, indexOfIn);
     }
 
-    public TreeNode myBuild(int[] preorder, int[] inorder, int pre_left, int pre_right, int in_left, int in_right, HashMap<Integer, Integer> in_value_index){
-        if(in_left > in_right){
-            return null;
-        }
-        int root_pre_index = pre_left;
-        int root_node_value = preorder[root_pre_index];
-        int root_inorder_index = in_value_index.get(root_node_value); // 获得中序遍历根的下标索引
-        int left_tree_node_num = root_inorder_index - in_left; // 左子树大小
+    public TreeNode myBuild(int[] preorder, int[] inorder, int preL, int preR,
+        int inL, int inR, Map<Integer, Integer> index){
 
-        TreeNode in_root_node = new TreeNode(root_node_value);
+        if (preL > preR) return null;
 
-        in_root_node.left = myBuild(preorder, inorder, root_pre_index + 1, root_pre_index + left_tree_node_num, in_left, root_inorder_index - 1, in_value_index);
-        in_root_node.right = myBuild(preorder, inorder, root_pre_index + left_tree_node_num + 1, pre_right, root_inorder_index + 1, in_right, in_value_index);
-        
-        return in_root_node;
+        int preRoot = preL; // 前序遍历根节点下标
+        int rootVal = preorder[preRoot];  // 根节点的值
+        int inRoot = index.get(rootVal); // 通过根节点的值获取中序根的下标
+        int lTreeSize = inRoot - inL;
+        TreeNode root = new TreeNode(rootVal);
+
+        root.left = myBuild(preorder, inorder, preL + 1, preL + lTreeSize,
+            inL, inRoot - 1, index);
+        root.right = myBuild(preorder, inorder, preL + lTreeSize + 1, preR,
+            inRoot + 1, inR, index);
+
+        return root;
     }
 }
 
-class Solution2 {
+class Solution1 {
     private Map<Integer, Integer> indexMap;
-
-    public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorder_left, int preorder_right, int inorder_left, int inorder_right) {
-        if (preorder_left > preorder_right) {
-            return null;
-        }
-
-        // 前序遍历中的第一个节点就是根节点
-        int preorder_root = preorder_left;
-        // 在中序遍历中定位根节点
-        int inorder_root = indexMap.get(preorder[preorder_root]);
-        
-        // 先把根节点建立出来
-        TreeNode root = new TreeNode(preorder[preorder_root]);
-        // 得到左子树中的节点数目
-        int size_left_subtree = inorder_root - inorder_left;
-        // 递归地构造左子树，并连接到根节点
-        // 先序遍历中「从 左边界+1 开始的 size_left_subtree」个元素就对应了中序遍历中「从 左边界 开始到 根节点定位-1」的元素
-        root.left = myBuildTree(preorder, inorder, preorder_left + 1, preorder_left + size_left_subtree, inorder_left, inorder_root - 1);
-        // 递归地构造右子树，并连接到根节点
-        // 先序遍历中「从 左边界+1+左子树节点数目 开始到 右边界」的元素就对应了中序遍历中「从 根节点定位+1 到 右边界」的元素
-        root.right = myBuildTree(preorder, inorder, preorder_left + size_left_subtree + 1, preorder_right, inorder_root + 1, inorder_right);
-        return root;
-    }
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         int n = preorder.length;
-        // 构造哈希映射，帮助我们快速定位根节点
+        // 构造哈希映射，快速定位根节点
         indexMap = new HashMap<Integer, Integer>();
-        for (int i = 0; i < n; i++) {
-            indexMap.put(inorder[i], i);
-        }
-        return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
+        IntStream.range(0, inorder.length)
+            .forEach(i -> indexMap.put(inorder[i], i));
+
+        return build(preorder, inorder, 0, n - 1,
+            0, n - 1);
+    }
+
+    public TreeNode build(int[] preorder, int[] inorder, int preStart, int preEnd,
+        int inStart, int inEnd) {
+
+        // 递归结束条件，队列必须要有意义，这里改为inorder相关内容也可
+        // if (inStart > inEnd) return null;
+        if (preStart > preEnd) return null;
+        
+        int preRoot = preStart; // 前序遍历中的第一个节点就是根节点
+        int inRoot = indexMap.get(preorder[preRoot]); // 在中序遍历中定位根节点
+        TreeNode root = new TreeNode(preorder[preRoot]);    // 根节点
+        int sizeLeftTree = inRoot - inStart; // 得到左子树中的节点数目
+
+        root.left = build(preorder, inorder, preStart + 1, preStart + sizeLeftTree, 
+            inStart, inRoot - 1);
+        root.right = build(preorder, inorder, preStart + sizeLeftTree + 1, preEnd,
+            inRoot + 1, inEnd);
+
+        return root;
     }
 }

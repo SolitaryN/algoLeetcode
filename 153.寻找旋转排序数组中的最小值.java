@@ -6,43 +6,29 @@
 
 // @lc code=start
 class Solution {
-    public int findMin1(int[] nums) {
+    /*
+     * @date 20241005
+     * 两种情况，要么有序要么无序
+     */
+    public int findMin(int[] nums) {
+        int left = 0, right = nums.length - 1;
 
-        int l = 0;
-        int r = nums.length - 1;
+        while (left <= right) {
+            // 有序时
+            if(nums[left] <= nums[right]) 
+                return nums[left];
 
-        while(l <= r){
-            if(nums[l] <= nums[r]){
-                return nums[l];
-            }
-
-            // int mid = (l + r) / 2;
-            int mid = l + (r - l) / 2;
-            if(nums[mid] >= nums[l]){
-                l = mid + 1;
-            }else if(nums[mid] < nums[l]){
-                r = mid;
-            }
-        }
-
-        return 0;
-    }
-
-public int findMin(int[] nums) {
-        int l = 0;
-        int r = nums.length - 1;
-
-        while(l < r){
-            int mid = l + (r - l) / 2;
-
-            if(nums[mid] <= nums[r]){
-                r = mid;
-            }else {
-                l = mid + 1;
+            // 无序时，最终 right == left，此时会返回
+            int mid = left + ((right - left) >> 1);
+            if (nums[left] <= nums[mid]) {
+                left = mid + 1;
+            } else if (nums[left] > nums[mid]) {
+                //因mid此时可能为最小值，所有是right = mid,而不是right = mid - 1
+                right = mid;
             }
         }
 
-        return nums[r];
+        return -1;
     }
 }
 // @lc code=end
