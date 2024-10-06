@@ -6,26 +6,24 @@
 
 // @lc code=start
 
-import java.util.Arrays;
 
 class Solution {
     /*
-     * @date 20240830
+     * @date 20240830  20241005
+     * 明确状态和选择，有两种选择，求最值，得递推公式
+     * dp[i] 表示前 i 间房屋能偷窃到的最高总金额
+     * dp[i] = max (dp[i−2] + nums[i], dp[i−1])
      */
-    // dp[i] 表示前 i 间房屋能偷窃到的最高总金额
-    // dp[i]=max(dp[i−2]+nums[i],dp[i−1])
     public int rob(int[] nums) {
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
+        if (nums.length == 1) 
+            return dp[0];
+        dp[1] = Math.max(nums[0], nums[1]);
 
-        for (int i = 1; i < dp.length; i++) {
-            if(i - 2 < 0) {
-                dp[i] = Math.max(0 + nums[i], dp[i - 1]);
-            } else {
-                dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
-            }
+        for (int i = 2; i < dp.length; i++) {
+            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
         }
-
         return dp[nums.length - 1];
     }
 }

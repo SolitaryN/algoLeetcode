@@ -32,9 +32,9 @@ class Solution {
         int maxAns = nums[0], curr = 0;
 
         for (int x : nums) {
-            if (curr < 0) {
+            if (curr < 0)
                 curr = 0;
-            }
+
             curr = curr + x;
             maxAns = Math.max(maxAns, curr);
         }
