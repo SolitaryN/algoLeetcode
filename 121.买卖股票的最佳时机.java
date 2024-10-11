@@ -6,18 +6,21 @@
 
 // @lc code=start
 class Solution {
+    /*
+     * @date 20241010
+     * 关键就是找到一个最小值 和 最大值的差值，这里一边走一边查
+     * 也可以使用动态规划进行求解
+     */
     public int maxProfit(int[] prices) {
-
         int max = 0;
-
         int minPrice = Integer.MAX_VALUE;
 
         // 最小值为左边界，如果遇到更小的更新左边界，否则计算差值和 max 进行对比
         for (int i = 0; i < prices.length; i++) {
             if(prices[i] < minPrice){
                 minPrice = prices[i];
-            }else{
-                max = prices[i] - minPrice > max?prices[i] - minPrice:max;
+            } else {
+                max = prices[i] - minPrice > max ? prices[i] - minPrice : max;
             }
         }
         return max;

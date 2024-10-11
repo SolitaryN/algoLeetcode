@@ -8,6 +8,7 @@
 class Trie {
 
     Node dummy; 
+
     public Trie() {
         dummy = new Node(' ');
     }
@@ -26,7 +27,6 @@ class Trie {
     
     public boolean search(String word) {
         Node res = getLast(word);
-
         return res != null && res.isWord;
     }
 
@@ -44,7 +44,6 @@ class Trie {
     
     public boolean startsWith(String prefix) {
         Node res = getLast(prefix);
-
         return res != null;
     }
 

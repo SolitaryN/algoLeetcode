@@ -6,11 +6,14 @@
 
 // @lc code=start
 class Solution {
+    /*
+     * @date 20241006
+     * 使用异或操作
+     */
     public int singleNumber(int[] nums) {
         int ans = 0;
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++)
             ans = ans ^ nums[i];
-        }
 
         return ans;
     }

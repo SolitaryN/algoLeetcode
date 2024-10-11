@@ -7,38 +7,40 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class Solution {
+    /*
+     * @date 20241009
+     * 回溯，这里需要记录是否已经包含，使用 set，或者数组进行记录
+     */
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> now = new ArrayList<>();
+        Set<Integer> used = new HashSet<>();
 
-        int[] used = new int[nums.length];
-
-        helper(ans, now, used, nums, 0);
-
+        backtrack(ans, now, used, nums, 0);
         return ans;
     }
 
-    void helper(List<List<Integer>> ans, List<Integer> now, int[] used, int[] nums, int count){
+    void backtrack(List<List<Integer>> ans, List<Integer> now, Set<Integer> used, int[] nums, int count){
         if(count == nums.length){
-            ans.add(new ArrayList<>(now)); // 注意这里添加的不是 now 数组本身，而是它的副本
+            // 回溯算法收割结果，写入now数组的副本
+            ans.add(new ArrayList<>(now)); 
             return;
         }
 
         for (int i = 0; i < nums.length; i++) {
-
-            if(used[i] == 0){
+            if(!used.contains(nums[i])){
                 now.add(nums[i]);
-                used[i] = 1;
+                used.add(nums[i]);
 
-                helper(ans, now, used, nums, count + 1);
+                backtrack(ans, now, used, nums, count + 1);
 
-                used[i] = 0;
+                used.remove(nums[i]);
                 now.remove(now.size() - 1);
-            }else{
-                continue;
             }
         }
     }
