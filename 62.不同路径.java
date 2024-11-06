@@ -1,4 +1,8 @@
 class Solution {
+    /*
+     * @date 20241001
+     * 使用 回溯 求解，注意剪枝操作
+     */
     public int uniquePaths1(int m, int n) {
         int[] ans = new int[1];
         dfs_helper(ans, 1, 1, m, n);
@@ -24,6 +28,8 @@ class Solution {
 
     /*
      * @date 20241001
+     * 使用动态规划，两个状态，两种选择
+                dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
      */
     public int uniquePaths(int m, int n) {
         int[][] ans = new int[m][n];

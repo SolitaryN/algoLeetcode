@@ -8,6 +8,8 @@
 class Solution {
     /*
      * @date 20241001
+     * 自底向上动态规划求解，这里两个状态(横纵坐标)、两种选择(上、左)
+            dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
      */
     public int minPathSum(int[][] grid) {
         int line = grid.length, column = grid[0].length;

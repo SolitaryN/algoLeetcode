@@ -13,7 +13,7 @@ import java.util.List;
 class Solution {
     /*
      * 20241005
-     * 注意这里直接把杨辉三角全部值向左对齐
+     * 注意这里直接把杨辉三角全部值向左对齐,同时basecase都为0，这里使用自底向上迭代方式求解
      */
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();

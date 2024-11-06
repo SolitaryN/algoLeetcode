@@ -33,6 +33,10 @@ class Solution {
         return s.substring(l + 1, r);
     }
 
+    /*
+     * @@date 20241001
+     * 使用动态规划求解，两种状态（左右边界）
+     */
     public String longestPalindrome(String s) {
         if (s == null || s.length() < 2)
             return s;
@@ -42,12 +46,13 @@ class Solution {
         int maxEnd = 0;    //最长回文串的终点
         int maxLen = 1;  //最长回文串的长度
 
+        // 先推 0到n, 之后 0到 n+1 会依赖 0 到 n 的计算结果
         boolean[][] dp = new boolean[strLen][strLen];
         for (int r = 1; r < strLen; r++) {
             for (int l = 0; l < r; l++) {
                 if (s.charAt(l) == s.charAt(r) &&
                     (r == l + 1 || r == l + 2 || dp[l + 1][r - 1])) {
-                    // 这里 r == l + 1 和 r == l + 2 是特殊判断，判断是否是特殊情况
+                    // 这里 r == l + 1 和 r == l + 2 是特殊判断，判断是否是特殊情况，或者说是basecase
                     // 类似于：aa 和 aba 这种，这种属于特殊情况，属于边界情况，特殊考虑，此时不能看 dp[l + 1][r - 1]
                     dp[l][r] = true;
                     if (r - l + 1 > maxLen) {
