@@ -89,27 +89,27 @@ class Solution {
 
     /*
      * @date 20240731
+     * @date 20250301
      * @desc 时间复杂度和空间复杂度都是 O(n)
      */
     public int longestConsecutive(int[] nums) {
         Set<Integer> set = new HashSet<>(); // 去重
-        for (int i : nums) {
-            set.add(i);
-        }
+        Arrays.stream(nums).forEach(ele -> set.add(ele));
 
         int longest = 0;
         for (int i : set) {
-            if (set.contains(i - 1)) { // 开始进行下一步之前，必须确保元素是序列的开头
+            // 开始进行下一步之前，必须确保元素是序列的开头
+            if (set.contains(i - 1)) {
                 continue;
             }
 
-            int now_long = 1;
+            int currLong = 1;
             int head = i;
             while (set.contains(head + 1)) {
-                now_long += 1;
+                currLong += 1;
                 head += 1;
             }
-            longest = Math.max(longest, now_long);
+            longest = Math.max(longest, currLong);
         }
         return longest;
     }

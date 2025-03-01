@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class Solution {
     public List<List<String>> groupAnagrams2(String[] strs) {
@@ -60,7 +61,7 @@ class Solution {
     /**
      * @Date 2024/7/29
      */
-    public List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams3(String[] strs) {
         Map<String, List<String>> ans = new HashMap<>();
 
         for(String str : strs) {
@@ -73,6 +74,28 @@ class Solution {
         }
 
         return new ArrayList<>(ans.values());
+    }
+
+    /*
+     * date: 20250301
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> ans = new HashMap<>();
+
+        for (String t : strs) {
+            char[] cs = t.toCharArray();
+            Arrays.sort(cs);
+            String norm = new String(cs);
+            List<String> l = ans.getOrDefault(norm, new ArrayList<>());
+            l.add(t);
+            ans.put(norm, l);
+        }
+
+        List<List<String>> s = ans.entrySet().parallelStream()
+            .map(entry -> entry.getValue())
+            .collect(Collectors.toList());
+
+        return s;
     }
 }
 // @lc code=end
