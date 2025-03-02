@@ -23,21 +23,23 @@ import java.util.HashSet;
 class Solution {
     /*
      * @date 20240926
-     * 双指针问题
-     * 从路程的角度出发 m + k + n = n + k + m，此时就算它们不相交，最后走到的都是null，相等退出循环
+     * 双指针问题，主要难点是链表长度不一致
+     * 最优解从路程的角度出发，假设 A 链到达交叉点距离为 m，B 链为 n，交叉点到最后为 k
+     * 则有 m + k + n = n + k + m
+     * 此时就算它们不相交，最后走到的都是null，相等退出循环
      */
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if(headA == null || headB == null) return null;
+        if (headA == null || headB == null) return null;
 
-        ListNode currA = headA;
-        ListNode currB = headB;
+        ListNode cursorA = headA;
+        ListNode cursorB = headB;
 
-        while(headA != headB){
-            headA = (headA == null)? currB : headA.next;
-            headB = (headB == null)? currA : headB.next;
+        while (cursorA != cursorB) {
+            cursorA = cursorA != null ? cursorA.next : headB;
+            cursorB = cursorB != null ? cursorB.next : headA;
         }
 
-        return headA;
+        return cursorA;
     }
 }
 // @lc code=end
