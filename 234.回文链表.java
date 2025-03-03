@@ -20,6 +20,9 @@ class Solution {
      * @date 20240926
      * 可以使用单链表后序遍历处理，不过函数压栈带来的空间复杂度
      * 在 isPalindrome1 中优化空间复杂度，使用快慢指针
+     * 
+     * @date 20250303
+     * 使用链表后续遍历，然后回退和left记录的左节点对比即可
      */
     ListNode left;
     boolean ans = true;
@@ -34,17 +37,21 @@ class Solution {
      * 后序遍历链表
      * https://labuladong.online/algo/data-structure/palindrome-linked-list/#%E4%B8%80%E3%80%81%E5%88%A4%E6%96%AD%E5%9B%9E%E6%96%87%E5%8D%95%E9%93%BE%E8%A1%A8
      */
-    public void traverse(ListNode head) {
-        if (head == null) return;
+    public void traverse(ListNode root) {
+        if (root == null) return;
 
-        traverse(head.next);
+        traverse(root.next);
 
-        if (head.val != left.val) {
+        if (root.val != left.val) {
             ans = false;
         }
         left = left.next;
     }
 
+    /*
+     * @date 20250303
+     * 先使用快慢指针找到链表中间元素，之后反转后面的链表，然后一个个对比节点即可
+     */
     public boolean isPalindrome1(ListNode head) {
         ListNode slow, fast;
         slow = fast = head;
