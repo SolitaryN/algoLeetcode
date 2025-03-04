@@ -19,6 +19,8 @@ class Solution {
     /*
      * @date 20240930
      * 该题注意保留尾部节点以进行拼接
+     * 
+     * @date 20250304
      */
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null) return head;
@@ -42,6 +44,8 @@ class Solution {
     /*
      * @date 20240930
      * 该题也可考虑递归，链表可以看成一个二叉树，进行递归操作，不过会有空间复杂度o(n)
+     * 
+     * @date 20250304
      */
     public ListNode swapPairs1(ListNode head) {
         if (head == null || head.next == null) {

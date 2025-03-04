@@ -22,6 +22,8 @@ class Solution {
     /*
      * @date 20240930
      * 注意，返回值不会算入到空间复杂度里面，所以说这里空间复杂度为o(1)
+     * 
+     * @date 20250304
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if (l1 == null || l2 == null)
@@ -30,7 +32,7 @@ class Solution {
         ListNode dummy = new ListNode();
         ListNode curr = dummy;
 
-        int carry = 0; // 表示进位 carry
+        int carry = 0; // carry 表示进位
         while (l1 != null || l2 != null || carry == 1) {
             int v1 = l1 == null ? 0 : l1.val;
             int v2 = l2 == null ? 0 : l2.val;
@@ -39,6 +41,7 @@ class Solution {
             res = res % 10;
             curr.next = new ListNode(res);
             curr = curr.next;
+
             l1 = l1 != null ? l1.next : null;
             l2 = l2 != null ? l2.next : null;
         }

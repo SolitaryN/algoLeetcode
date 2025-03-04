@@ -19,12 +19,14 @@
 public class Solution {
     /*
      * @date 20240926
+     * 
+     * @date 20250304
      */
     public ListNode detectCycle(ListNode head) {
         if(head == null) return null;
 
-        ListNode slow, fast;
-        slow = fast = head;
+        ListNode slow = head, fast = head;
+
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;

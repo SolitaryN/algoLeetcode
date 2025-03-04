@@ -26,22 +26,22 @@ import java.util.HashMap;
 class Solution {
     /*
      * @date 20241001
-     * 空间复杂度为 o(n)
+     * 空间复杂度为 O(n)，时间复杂度为O(n)
+     * 
+     * @date 20250304
      */
     public Node copyRandomList(Node head) {
-        Node curr = head;
         HashMap<Node, Node> map = new HashMap<>();
 
-        while(curr != null){
+        Node curr = head;
+        for(; curr != null; curr = curr.next) {
             map.put(curr, new Node(curr.val));
-            curr = curr.next;
         }
 
         curr = head;
-        while(curr != null){
+        for(; curr != null; curr = curr.next) {
             map.get(curr).next = map.get(curr.next);
             map.get(curr).random = map.get(curr.random);
-            curr = curr.next;
         }
         return map.get(head);
     }
@@ -49,9 +49,11 @@ class Solution {
 
     /*
      * 20241001
-     * 递归解决
+     * 递归解决，不过这里还是利用map保存旧新节点的映射
+     * @date 20250304
      */
     Map<Node, Node> cachedNode = new HashMap<Node, Node>();
+
     public Node copyRandomList1(Node head) {
         if (head == null) {
             return null;
@@ -73,22 +75,25 @@ class Solution {
         if (head == null) {
             return null;
         }
+        // 创建备份节点构成 a -> a' -> ...
         for (Node node = head; node != null; node = node.next.next) {
             Node nodeNew = new Node(node.val);
             nodeNew.next = node.next;
             node.next = nodeNew;
         }
+        // 设置备份节点的random指向备份节点
         for (Node node = head; node != null; node = node.next.next) {
             Node nodeNew = node.next;
             nodeNew.random = (node.random != null) ? node.random.next : null;
         }
-        Node headNew = head.next;
+        // 保存函数返回值；从 a -> a' -> ... 中分割出备份链表
+        Node ans = head.next;
         for (Node node = head; node != null; node = node.next) {
             Node nodeNew = node.next;
             node.next = node.next.next;
             nodeNew.next = (nodeNew.next != null) ? nodeNew.next.next : null;
         }
-        return headNew;
+        return ans;
     }
 }
 // @lc code=end

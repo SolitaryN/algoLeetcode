@@ -19,6 +19,8 @@
 class Solution {
     /*
      * @date 20240930
+     * 
+     * @date 20250304
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode();
