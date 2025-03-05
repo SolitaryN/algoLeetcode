@@ -11,7 +11,11 @@ import java.util.Map;
 import java.util.Stack;
 
 class Solution {
-    public boolean isValid1(String s) {
+    /*
+     * @date 20250305
+     * 使用map来保存字符的匹配，使用stack来模拟过程
+     */
+    public boolean isValid(String s) {
         Map<Character, Character> map = new HashMap<>();
         map.put('}', '{');
         map.put(']', '[');
@@ -20,7 +24,7 @@ class Solution {
         Stack<Character> stack = new Stack<>();
         int len = s.length();
         for (int i = 0; i < len; i++) {
-            char c = s.charAt(i);
+            Character c = s.charAt(i);
             if(map.containsKey(c)){
                 if(stack.isEmpty() || map.get(c) != stack.peek())
                     return false;
@@ -37,7 +41,7 @@ class Solution {
      * @date 20241005
      * 注意判断是否成对的时候，传入的左右括号值
      */
-    public boolean isValid(String s) {
+    public boolean isValid1(String s) {
         if(s.length() % 2 == 1)
             return false;
 
