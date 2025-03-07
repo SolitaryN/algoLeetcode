@@ -14,36 +14,35 @@ class Solution {
     /*
      * @date 20241010
      * 按层变量，while循环，四个类型的方向
+     * 
+     * @date 20250307
      */
     public List<Integer> spiralOrder(int[][] matrix) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
             return Collections.emptyList();
 
-        List<Integer> order = new ArrayList<Integer>();
+        List<Integer> ans = new ArrayList<Integer>();
         int nr = matrix.length, nc = matrix[0].length;
-        int left = 0, right = nc - 1, top = 0, bottom = nr - 1;
+        int cLeft = 0, cRight = nc - 1, rTop = 0, rBottom = nr - 1;
 
-        while (left <= right && top <= bottom) {
-            for (int column = left; column <= right; column++)
-                order.add(matrix[top][column]);
+        for(;cLeft <= cRight && rTop <= rBottom;
+                cLeft++, cRight--, rTop++, rBottom-- ) {
+            for (int column = cLeft; column <= cRight; column++)
+                ans.add(matrix[rTop][column]);
 
-            for (int row = top + 1; row <= bottom; row++)
-                order.add(matrix[row][right]);
+            for (int row = rTop + 1; row <= rBottom; row++)
+                ans.add(matrix[row][cRight]);
 
-            if (left < right && top < bottom) {
-                for (int column = right - 1; column > left; column--)
-                    order.add(matrix[bottom][column]);
+            if (cLeft < cRight && rTop < rBottom) {
+                for (int column = cRight - 1; column > cLeft; column--)
+                    ans.add(matrix[rBottom][column]);
 
-                for (int row = bottom; row > top; row--)
-                    order.add(matrix[row][left]);
+                for (int row = rBottom; row > rTop; row--)
+                    ans.add(matrix[row][cLeft]);
             }
-
-            left++;
-            right--;
-            top++;
-            bottom--;
         }
-        return order;
+
+        return ans;
     }
 }
 // @lc code=end
