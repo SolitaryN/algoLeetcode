@@ -9,19 +9,22 @@ class Solution {
     /*
      * @date 20241005
      * 注意这里的递推方程所代表f(n)，到第n步有几种方法，自底向上的解决办法
+     * 
+     * @date 20250308
+     * 动态规划题目：明确状态、明确选择、写出状态转移方程
      */
     public int climbStairs1(int n) {
-        int[] ans = new int[50];
-        ans[1] = 1;
-        ans[2] = 2;
+        int[] dp = new int[50];
+        dp[1] = 1;
+        dp[2] = 2;
         
         if(n == 1 || n == 2)
-            return ans[n];
+            return dp[n];
 
-        for (int i = 3; i < ans.length; i++) {
-            ans[i] = ans[i - 1] +  ans[i - 2];
+        for (int i = 3; i < dp.length; i++) {
+            dp[i] = dp[i - 1] +  dp[i - 2];
         }
-        return ans[n];
+        return dp[n];
     }
 
     /*
@@ -29,17 +32,17 @@ class Solution {
      * 优化空间复杂度，去除Dp table占用的空间
      */
     public int climbStairs2(int n) {
-        int step1 = 1;
-        int step2 = 2;
+        int dp1 = 1;
+        int dp2 = 2;
         
         if(n == 1 || n == 2)
             return n;
 
         int ans = 0;
         for (int i = 3; i <= n; i++) {
-            ans = step1 + step2;
-            step1 = step2;
-            step2 = ans;
+            ans = dp1 + dp2;
+            dp1 = dp2;
+            dp2 = ans;
         }
         return ans;
     }
