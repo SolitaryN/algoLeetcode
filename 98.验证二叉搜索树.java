@@ -32,8 +32,10 @@ class Solution {
     }
 
     /*
-     * 20241003
+     * @date 20241003
      * 对左右子树的节点值设置边界，进而递归求解
+     * 
+     * @date 20250320
      */
     public boolean isValidBST(TreeNode root) {
         return isValidBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
@@ -48,6 +50,7 @@ class Solution {
 
         boolean left = isValidBSTHelper(root.left, lower, root.val);
         boolean right = isValidBSTHelper(root.right, root.val, upper);
+
         return left && right;
     }
 }

@@ -30,6 +30,8 @@ import java.util.Stack;
 class Solution {
     /*
      * @date 202410102
+     * 
+     * @date 20250320
      */
     public List<Integer> inorderTraversal1(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
@@ -49,6 +51,9 @@ class Solution {
     /*
      * @date 20241002 
      * 迭代求法，使用显示的栈
+     * 
+     * @date 20250320
+     * 凡是递归求解的一般都可以转换为栈求解
      */
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();

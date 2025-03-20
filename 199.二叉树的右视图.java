@@ -34,6 +34,9 @@ class Solution {
     /*
      * @date 20241003
      * 两种解法，BFS 和 DFS
+     * 
+     * @date 20250320
+     * 建议使用bfs，更符合直觉
      */
     public List<Integer> rightSideView(TreeNode root) {
         if(root == null)
@@ -49,6 +52,8 @@ class Solution {
     /*
      * @date 20241003
      * 每次都尽力先往右边走，再往左边走，使用size和depth的关系收割结果
+     * 
+     * @date 20250320
      */
     void dfs(TreeNode root, int depth, List<Integer> ans){
         if(root == null)
@@ -65,6 +70,8 @@ class Solution {
     /*
      * @date 20241003
      * 注意层次遍历中的 size，需要提前保存
+     * 
+     * @date 20250320
      */
     void bfs(TreeNode root, List<Integer> ans){
         Queue<TreeNode> queue = new LinkedList<>();
@@ -76,6 +83,7 @@ class Solution {
             int levelSize = queue.size();
             for (int i = 0; i < levelSize; i++) {
                 TreeNode node = queue.poll();
+                // 收集每层最后面的节点值
                 if(i == levelSize - 1)
                     ans.add(node.val);
 

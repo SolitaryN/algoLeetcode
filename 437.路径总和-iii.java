@@ -23,7 +23,9 @@
 class Solution {
     /*
      * @date 20241003
-     * 该题不能简单拆分为 L + R，独立计算从每个root出发符号条件的，在计算以左右子树根节点出发的
+     * 该题不能简单拆分为 L + R，独立计算从每个root出发符号条件的，再计算以左右子树根节点出发的
+     * 
+     * @date 20250320
      */
     public int pathSum(TreeNode root, long targetSum) {
         if (root == null)  return 0;

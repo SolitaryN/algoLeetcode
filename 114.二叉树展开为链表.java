@@ -19,6 +19,9 @@ class Solution {
     /*
      * @date 20241003
      * 笨方法，使用队列记录前序遍历，之后构造链表
+     * 
+     * @date 20250320
+     * 这个方法超级笨，不建议使用
      */
     public void flatten1(TreeNode root) {
         if(root == null)
@@ -46,6 +49,9 @@ class Solution {
     /*
      * 定义：将以 root 为根的树拉平为链表，这里也是一个递归问题
      * @date 20241003
+     * 
+     * @date 20250320
+     * 递归问题，寻找等价子问题，寻找出递归条件
      */
     public void flatten(TreeNode root) {
         // base case

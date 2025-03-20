@@ -30,6 +30,8 @@ class Solution {
     /*
      * @date 20241002
      * DFS解决   深度
+     * 
+     * @date 20250320
      */
     public int maxDepth(TreeNode root) {
         if(root == null){
@@ -45,11 +47,14 @@ class Solution {
     /*
      * @date 20241002
      * BFS 解决  广度
+     * 
+     * @date 20250320
      */
     public int maxDepth1(TreeNode root) {
         if (root == null)
             return 0;
-        Deque<TreeNode> queue = new ArrayDeque<>();
+        // Deque<TreeNode> queue = new ArrayDeque<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         int ans = 0;
         while (!queue.isEmpty()) {

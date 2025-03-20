@@ -21,16 +21,19 @@ import java.util.stream.Stream;
 /*
  * @date 20241003
  * 下面两种写法都一样，区别就是保存index的方式稍有不同，一个成员遍历，一个局部变量
+ * 
+ * @date 20250320
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         Map<Integer, Integer> indexOfIn = new HashMap<>();
 
+        // 左闭右开
         IntStream.range(0, inorder.length)
             .forEach(index -> indexOfIn.put(inorder[index], index));
 
         return myBuild(preorder, inorder, 0, preorder.length - 1,
-            0, inorder.length, indexOfIn);
+            0, inorder.length - 1, indexOfIn);
     }
 
     public TreeNode myBuild(int[] preorder, int[] inorder, int preL, int preR,
@@ -38,11 +41,11 @@ class Solution {
 
         if (preL > preR) return null;
 
-        int preRoot = preL; // 前序遍历根节点下标
-        int rootVal = preorder[preRoot];  // 根节点的值
-        int inRoot = index.get(rootVal); // 通过根节点的值获取中序根的下标
-        int lTreeSize = inRoot - inL;
+        int rootVal = preorder[preL];  // 根节点的值
         TreeNode root = new TreeNode(rootVal);
+
+        int inRoot = index.get(rootVal); // 通过根节点的值获取中序根的下标
+        int lTreeSize = inRoot - inL; // 获取左子树节点数量
 
         root.left = myBuild(preorder, inorder, preL + 1, preL + lTreeSize,
             inL, inRoot - 1, index);

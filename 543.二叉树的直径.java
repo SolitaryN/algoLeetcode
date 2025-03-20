@@ -31,6 +31,9 @@ class Solution {
      * 二叉树的通过某个结点的直径 = 左子树高度 + 右子树高度
      * 但是注意，通过根节点的直径不一定是该树的最大直径
      * @date 20241002
+     * 
+     * @date 20250320
+     * 某个结点的直径 = 左子树高度 + 右子树高度
      */
     public int diameterOfBinaryTree1(TreeNode root) {
         ans = 0;

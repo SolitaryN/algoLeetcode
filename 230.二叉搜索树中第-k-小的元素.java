@@ -32,8 +32,11 @@ class Solution {
      * @date 20241003
      * 这里使用大根堆，保存最小的k个元素
      * 每次添加元素的时候，发现超过最大容量，就去除最大元素，保证保存下来的元素是最小的k个元素
+     * 
+     * @date 20250320
      */
     public int kthSmallest1(TreeNode root, int k) {
+        // 建立大根堆
         PriorityQueue<TreeNode> queue = new PriorityQueue<>(k, (a, b) -> b.val - a.val);
         inOrder(root, queue, k);
         return queue.peek().val;
@@ -52,6 +55,8 @@ class Solution {
     /*
      * @date 20241003
      * 使用栈来进行中序遍历，计数，到点输出
+     * 
+     * 逻辑很混乱，不建议使用
      */
     public int kthSmallest2(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<>();
@@ -73,21 +78,26 @@ class Solution {
     }
 
 
-    // 记录结果
-    int res = 0;
-    // 记录当前元素的排名
-    int rank = 0;
 
     /*
+     * @date 20241003
      * 利用 BST 的中序遍历特性
+     * 
+     * @date 20250320
      */
     int kthSmallest(TreeNode root, int k) {
         traverse(root, k);
         return res;
     }
 
+    // 记录结果
+    int res = 0;
+    // 记录当前元素的排名
+    int rank = 0;
+
     void traverse(TreeNode root, int k) {
-        if (root == null)
+        // 当rank为k，说明已经找到，直接返回，不用遍历了
+        if (root == null || rank == k)
             return;
 
         traverse(root.left, k);

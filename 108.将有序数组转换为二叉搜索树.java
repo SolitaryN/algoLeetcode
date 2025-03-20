@@ -24,6 +24,8 @@ class Solution {
     /*
      * @date 20241003
      * 先对有序数组进行二分查找，查找到中间元素进行插入操作，这是一个递归操作
+     * 
+     * @date 20250320
      */
     public TreeNode sortedArrayToBST(int[] nums) {
         return searchAndInsert(nums, 0, nums.length - 1);
@@ -36,6 +38,7 @@ class Solution {
         TreeNode node = new TreeNode(nums[mid]);
         node.left = searchAndInsert(nums, start, mid - 1);
         node.right = searchAndInsert(nums, mid + 1, end);
+
         return node;
     }
 }

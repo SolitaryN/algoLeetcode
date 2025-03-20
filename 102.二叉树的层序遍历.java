@@ -33,6 +33,8 @@ class Solution {
     /*
      * @date 20241002
      * 这里注意一定要提前保留 size，避免逻辑错误，避免使用queue.size直接进行循环判断
+     * 
+     * @date 20250320
      */
     public List<List<Integer>> levelOrder(TreeNode root) {
         if (root == null)
@@ -43,8 +45,9 @@ class Solution {
         List<List<Integer>> ans = new ArrayList<>();
 
         while (!queue.isEmpty()) {
-            int size = queue.size();
             List<Integer> level = new ArrayList<>();
+
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 if (node.left != null)  queue.offer(node.left);
@@ -52,6 +55,7 @@ class Solution {
 
                 level.add(node.val);
             }
+
             ans.add(level);
         }
         return ans;
