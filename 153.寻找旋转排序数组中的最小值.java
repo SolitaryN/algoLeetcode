@@ -9,6 +9,9 @@ class Solution {
     /*
      * @date 20241005
      * 两种情况，要么有序要么无序
+     * 
+     * @date 20250321
+     * 当数组或子数组无序时，最小值只会出现在无序的区间
      */
     public int findMin(int[] nums) {
         int left = 0, right = nums.length - 1;
@@ -21,9 +24,11 @@ class Solution {
             // 无序时，最终 right == left，此时会返回
             int mid = left + ((right - left) >> 1);
             if (nums[left] <= nums[mid]) {
+                // 无序时，当左边有序时，最小值一定在右边
                 left = mid + 1;
             } else if (nums[left] > nums[mid]) {
-                //因mid此时可能为最小值，所有是right = mid,而不是right = mid - 1
+                // 无序时，当左边无序时，最小值一定在左边，同时也可能是 mid 下标元素最小
+                // 因mid此时可能为最小值，所有是right = mid,而不是right = mid - 1
                 right = mid;
             }
         }

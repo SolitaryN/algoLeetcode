@@ -2,13 +2,17 @@ class Solution {
     /*
      * @date 20241004
      * 这里需要注意mid的计算方式，下面写法不容易造成超出表示范围的情况
-        int mid = left + (right - left) / 2; // 相当于 (left + right)/2
+     *  int mid = left + (right - left) / 2; // 相当于 (left + right)/2
+     * 
+     * @date 20250321
+     * 二分查找的模板，注意这里插入位置一定是 left
      */
     public int searchInsert(int[] nums, int target) {
         int len = nums.length;
         int left = 0, right = len - 1;
 
         while (right >= left) {
+            // 这里需要注意mid的计算方式，下面写法不容易造成超出表示范围的情况
             int mid = left + (right - left) / 2; // 相当于 (left + right)/2
             if (nums[mid] == target)
                 return mid;

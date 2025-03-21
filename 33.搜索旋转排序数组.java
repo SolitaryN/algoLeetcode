@@ -8,16 +8,21 @@
 class Solution {
     /*
      * @date 20241005    注意位运算符的优先级高于 + -
-     * 将数组一分为二，其中一定有一个是有序的，另一个可能是有序，也能是部分有序。
-        有序部分用二分法查找。
-        无序部分再一分为二，其中一个一定有序，另一个可能有序，可能无序。就这样循环. 
+     * 将数组一分为二，其中一定有一个是有序的，另一个可能是有序，也可能是部分有序。
+     * 有序部分用二分法查找。
+     * 无序部分再一分为二，其中一个一定有序，另一个可能有序，可能无序。就这样循环. 
+     * 
+     * @date 20250321
+     * 如果target不在有序区间，就在无序区间
+     * 如果在有序区间，使用二分查找即可
+     * 如果不在无序区间，则在另一边继续查找，使用类似于二分查找的策略即可
      */
-    public int search1(int[] nums, int target) {
+    public int search(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
 
         while (left <= right) {
-            // 注意位运算符的优先级高于 + -，这里要带括号
-            int mid = left + ((right - left) >> 1); 
+            // 注意位运算符的优先级低于 + -，注意是“低于” ！！！这里要带括号
+            int mid = left + ((right - left) >> 1);
 
             if(nums[mid] == target) {
                 return mid;
