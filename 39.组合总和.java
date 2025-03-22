@@ -16,6 +16,10 @@ class Solution {
     /*
      * @date 20241009
      * 回溯时，两种选择，选择自己，选择下一个元素，收集的和等于 target 或 大于 target 时返回，也即剪枝操作
+     * 
+     * @date 20250322
+     * 对于一个元素来说，有两种选择：选择自己、选择下一个元素
+     * 回溯结束条件：和等于 target 或 大于 target 或 下标越界
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         helperDFS(0, candidates, target, 0);
@@ -31,7 +35,7 @@ class Solution {
         if(sum > target || index >= candidates.length)
             return;
         
-        // 两种选择，不需要循环: 1、还是选择自己   2、选择下一个
+        // 不需要循环，因为只有两种选择，手动写出即可: 1、选择自己   2、选择下一个
         // 选择自己
         now.add(candidates[index]);
         helperDFS(index, candidates, target, sum + candidates[index]);

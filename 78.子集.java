@@ -15,6 +15,8 @@ class Solution {
     /*
      * @date 20241009
      * 对于每个元素来说都只有两种选择：加、不加
+     * 
+     * @date 20250322
      */
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
@@ -29,10 +31,12 @@ class Solution {
             return;
         }
 
+        // 如果是加，出递归后需要删除，即回溯
         set.add(nums[index]);
         helperDfs(nums, index + 1, ans, set);
-
         set.remove(nums[index]);
+
+        // 如果是不加
         helperDfs(nums, index + 1, ans, set);
     }
 }

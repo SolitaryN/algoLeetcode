@@ -19,6 +19,10 @@ class Solution {
     /*
      * @date 20241009
      * 这里使用循环选择一组 letters 进行
+     * 
+     * @date 20250322
+     * 使用回溯，挨个字符必须进行选择，且不能选择为空。
+     *  选择只能为对应数字的字母集合中的字符
      */
     public List<String> letterCombinations(String digits) {
         table.put('2', "abc");
@@ -36,20 +40,24 @@ class Solution {
         return ans;
     }
 
-    void backtrack(int index, String digits, StringBuilder combination) {
+    void backtrack(int index, String digits, StringBuilder builder) {
+        // 回溯算法的终止条件，进行结果收割
         if (index == digits.length()) {
-            ans.add(combination.toString());
+            ans.add(builder.toString());
             return;
         }
 
         Character digitNow = digits.charAt(index);
         String letters = table.get(digitNow);
+
         int len = letters.length();
         for (int i = 0; i < len; i++) {
-            combination.append(letters.charAt(i));
-            backtrack(index + 1, digits, combination);
             // 注意回溯删除的元素是最后一个字符
-            combination.deleteCharAt(index);
+            builder.append(letters.charAt(i));
+            backtrack(index + 1, digits, builder);
+            builder.deleteCharAt(index);
+            // 也可写为
+            // builder.deleteCharAt(builder.length() - 1);
         }
     }
 }

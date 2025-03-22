@@ -14,7 +14,10 @@ import java.util.Set;
 class Solution {
     /*
      * @date 20241009
-     * 回溯，这里需要记录是否已经包含，使用 set，或者数组进行记录
+     * 回溯，这里需要记录是否已经包含，使用 set
+     * 
+     * @date 20250322
+     * 这里如果使用类型为集合的now来记录，会导致回溯时需要复制now，此时可能添加的数组无序，所以使用list
      */
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
