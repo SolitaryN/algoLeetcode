@@ -12,12 +12,14 @@ class Solution {
      * 也可以使用动态规划进行求解，这个更推荐，可以一下把该类问题全部解决
      * 
      * @date 20250310
+     * @date 20250324
      */
     public int maxProfit(int[] prices) {
         int ans = 0;
         int minPrice = prices[0];
 
         // 最小值为左边界，如果遇到更小的更新左边界，否则计算差值和 max 进行对比
+        // 贪心策略，阶段性保存（当前价格 - 到目前为止最低价格），即当前为止的最大利润
         for (int i = 0; i < prices.length; i++) {
             minPrice = Math.min(minPrice, prices[i]);
             ans = Math.max(ans, prices[i] - minPrice);
@@ -41,6 +43,10 @@ class Solution {
      *  第i天持有股票，则第i-1天可能状况有：1、第i-1天持有股票，2、第i-1天未持有股票，然后今天买入
      *      dp[i][1] = max (dp[i-1][1], - prices[i])
      *      这里因为限制只能买一次，所以这里使用 -prices[i]，而不是 dp[i-1][0] - prices[i]
+     * 
+     * @date 20250324
+     * 状态转换图
+     * https://labuladong.online/algo/images/stock/1.png
      */
     public int maxProfit2(int[] prices) {
         int n = prices.length;
@@ -53,7 +59,7 @@ class Solution {
         // 从第1天开始
         for (int i = 1; i < prices.length; i++) {
             dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + prices[i]);
-            dp[i][1] = Math.max(dp[i-1][1], - prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1], - prices[i]); // 这里只买卖一次，所以这里是 - prices[i]
         }
 
         return dp[n-1][0];
