@@ -9,6 +9,9 @@ class Solution {
     /*
      * @date 20241006
      * 使用异或操作
+     * 
+     * @date 20250325
+     * a ^ a = 0    a ^ 0 = a
      */
     public int singleNumber(int[] nums) {
         int ans = 0;

@@ -36,36 +36,38 @@ class Solution {
     /*
      * @@date 20241001
      * 使用动态规划求解，两种状态（左右边界）
+     * 
+     * @date 20250325
      */
     public String longestPalindrome(String s) {
         if (s == null || s.length() < 2)
             return s;
 
-        int strLen = s.length();
-        int maxStart = 0;  //最长回文串的起点
-        int maxEnd = 0;    //最长回文串的终点
-        int maxLen = 1;  //最长回文串的长度
+        int len = s.length();
+        int maxL = 0;    //最长回文串的起点
+        int maxR = 0;    //最长回文串的终点
+        int maxLen = 0;  //最长回文串的长度
 
-        // 先推 0到n, 之后 0到 n+1 会依赖 0 到 n 的计算结果
-        boolean[][] dp = new boolean[strLen][strLen];
-        for (int r = 1; r < strLen; r++) {
+        // 注意递推策略，先推 0~n, 后 0~n+1，因为后面的需要依赖 0~n 的计算结果
+        boolean[][] dp = new boolean[len][len];
+        for (int r = 1; r < len; r++) {
             for (int l = 0; l < r; l++) {
                 if (s.charAt(l) == s.charAt(r) &&
                     (r == l + 1 || r == l + 2 || dp[l + 1][r - 1])) {
-                    // 这里 r == l + 1 和 r == l + 2 是特殊判断，判断是否是特殊情况，或者说是basecase
-                    // 类似于：aa 和 aba 这种，这种属于特殊情况，属于边界情况，特殊考虑，此时不能看 dp[l + 1][r - 1]
+                    // r==l + 1 和 r==l + 2 判断是否是 basecase，类似于：aa 和 aba
+                    // 属于边界情况，此时不看 dp[l + 1][r - 1]
                     dp[l][r] = true;
                     if (r - l + 1 > maxLen) {
                         maxLen = r - l + 1;
-                        maxStart = l;
-                        maxEnd = r;
+                        maxL = l;
+                        maxR = r;
                     }
                 }
 
             }
 
         }
-        return s.substring(maxStart, maxEnd + 1);
+        return s.substring(maxL, maxR + 1);
     }
 }
 // @lc code=end

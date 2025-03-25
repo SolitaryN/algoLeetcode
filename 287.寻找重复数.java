@@ -11,6 +11,8 @@ class Solution {
      * @date 20241007
      * 把数组看出一个链表，如果这里因为有重复元素，必定有环
      * 这里把题目幻化成找环的起点
+     * 
+     * @date 20250325
      */
     public int findDuplicate1(int[] nums) {
         // slow 和 fast 为下标，理解为指针
@@ -37,6 +39,8 @@ class Solution {
     /*
      * @date 20241007
      * 二分值域进行查找，注意是 l < r 为循环终止，此时 l 或 r 就为解
+     * 
+     * @date 20250325
      */
     public int findDuplicate(int[] nums) {
         // 这里 l 和 r 是值域，而不是代表下标
@@ -57,7 +61,10 @@ class Solution {
             else
                 l = mid + 1;
         }
-        return l;
+        
+        
+        // return l; // 此时 l == r
+        return r;
     }
 }
 
