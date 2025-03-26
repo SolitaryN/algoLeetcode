@@ -15,7 +15,7 @@ import java.util.Map;
  * 官方题解，使用自定义双向链表 + hashmap实现
  * https://leetcode.cn/problems/lru-cache/solutions/259678/lruhuan-cun-ji-zhi-by-leetcode-solution
  */
-class LRUCache{
+class LRUCache2{
     class DLinkedNode {
         int key;
         int value;
@@ -30,7 +30,7 @@ class LRUCache{
     private int capacity;
     private DLinkedNode head, tail;
 
-    public LRUCache(int capacity) {
+    public LRUCache2 (int capacity) {
         this.size = 0;
         this.capacity = capacity;
         // 使用伪头部和伪尾部节点
@@ -138,7 +138,9 @@ class LRUCache1 {
         // 如果没有该key，则做以下处理，如果目前容器已经满了，则进行最老元素的删除
         if(map.size() >= this.capacity){
             // LinkedHashMap中新加入的元素会放置到双链表的末尾
-            int oldestKey = map.keySet().iterator().next();
+            //      这里LinkedHashMap 返回的keySet是LinkedHashSet，
+            //          按照插入顺序的key集合，有序
+            int oldestKey = map.keySet().iterator().next();// 第一个元素的key
             map.remove(oldestKey);
         }
         map.put(key, value);
@@ -149,7 +151,48 @@ class LRUCache1 {
         map.remove(key);
         map.put(key, val);
     }
+}
 
+/*
+ * @date 20250326
+ */
+class LRUCache{
+    int cap;
+    LinkedHashMap<Integer, Integer> cache;
+
+    public LRUCache(int capacity) {
+        cap = capacity;
+        cache = new LinkedHashMap<>();
+    }
+
+    public int get(int key) {
+        if (!cache.containsKey(key)) {
+            return -1;
+        }
+
+        makeRecent(key);
+        return cache.get(key);
+    }
+
+    public void put(int key, int value) {
+        if (cache.containsKey(key)) {
+            cache.put(key, value);
+            makeRecent(key);
+            return;
+        }
+
+        if (cache.size() >= cap) {
+            int del = cache.keySet().iterator().next();
+            cache.remove(del);
+        }
+        cache.put(key, value);
+    }
+
+    public void makeRecent(int key) {
+        int val = cache.get(key);
+        cache.remove(key);
+        cache.put(key, val);
+    }
 }
 
 

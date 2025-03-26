@@ -17,19 +17,19 @@ class Solution {
      * 
      * @date 20250305
      * 注意大小根堆的区别，然后还是默认的PriorityQueue是小根堆，这个是经典解法，但时间复杂度为 O(nlogn)
+     * 
+     * @date 20250328
      */
-    public int findKthLargest1(int[] nums, int k) {
+    public int findKthLargest(int[] nums, int k) {
         // 默认是小根堆
         Queue<Integer> queue = new PriorityQueue<>();
 
-        int num = 0;
-        for (int i : nums) {
-            if (num < k) {
-                queue.offer(i);
-                num++;
-            }else{
-                queue.offer(i);
-                queue.poll(); // 把最小元素抛弃
+        for (int num : nums) {
+            queue.offer(num);
+
+            // 把最小元素抛弃
+            if (queue.size() > k) {
+                queue.poll();
             }
         }
         return queue.peek();
@@ -41,7 +41,7 @@ class Solution {
      * 这里是官方题解给的，先使用二叉排序寻找 pivot 的坐标，这个坐标其实就是最终左边，显示它为第几小，此时把第k大转换为第n-k+1小，看它们之间的关系，决定对左边还是右边进行递归，知道最后得到答案
      * 时间复杂度为O(n)
      */
-    public int findKthLargest(int[] _nums, int k) {
+    public int findKthLargest2(int[] _nums, int k) {
         int n = _nums.length;
         // n - k 表示下标，第k大，即第n-k+1小，这里是下标所以没有加1
         return quickselect(_nums, 0, n - 1, n - k);
