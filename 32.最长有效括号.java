@@ -72,10 +72,11 @@ class Solution {
                     int leftIndex = stk.pop();
                     // 以这个右括号结尾的最长子串长度，这里加上该子串左边邻接合法子串的长度
                     // 需要注意如果左边字符下标为0时，直接加 0 就可，因为前面已经没有字符了
-                    int len = leftIndex == 0 ? i - leftIndex + 1 :  i - leftIndex + 1 + dp[leftIndex - 1];
+                    int len = leftIndex == 0 ? 
+                            i - leftIndex + 1 :  i - leftIndex + 1 + dp[leftIndex - 1];
                     dp[i] = len;
                 } else {
-                    // 没有配对的左括号
+                    // 没有配对的左括号，此时前面的合法字符串已经结束
                     dp[i] = 0;
                 }
             }

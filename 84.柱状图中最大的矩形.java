@@ -14,7 +14,8 @@ class Solution {
      * 
      * @date 20250305
      * 这题使用单调递增栈来解决
-     * 以当前单调递增栈中栈顶下标的高作为矩形的高，然后寻找该高度时最大的宽度，即在单调递增栈中该元素左边的元素和当前遍历的违反了单调性的index的下标，相减再减1即为最大宽。
+     * 以当前单调递增栈中栈顶下标的高作为矩形的高，然后寻找该高度时最大的宽度，
+     *  即在单调递增栈中该元素左边的元素和当前遍历的违反了单调性的index的下标，相减再减1即为最大宽。
      * 
      * 单调栈可以帮助快速找到每个柱子左右两侧第一个比它矮的柱子，从而计算以该柱子为高的最大矩形面积。
      */
@@ -31,9 +32,9 @@ class Solution {
             // 当前元素违反了单调性时，会收割结果，如果该元素为最后的哨兵元素，则全部会出栈
             while (!stack.isEmpty() && newHeight[stack.peek()] > newHeight[i]) {
                 int mid = stack.pop();
+                int height = newHeight[mid];
 
                 int width = i - stack.peek() - 1;
-                int height = newHeight[mid];
                 maxArea = Math.max(width * height, maxArea);
             }
 
