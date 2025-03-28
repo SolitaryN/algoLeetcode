@@ -9,6 +9,7 @@
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.stream.IntStream;
 
 /**
  * Definition for singly-linked list.
@@ -21,30 +22,33 @@ import java.util.Queue;
  * }
  */
 class Solution {
+    /*
+     * @date 20250327
+     */
     public ListNode mergeKLists1(ListNode[] lists) {
-        if(lists.length == 0){
+        if(lists.length == 0)
             return null;
-        }
 
-        ListNode H = new ListNode(-1);
-        ListNode last = H;
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
 
-        while(getMinIndex(lists) != -1){
-            int maxIndex = getMinIndex(lists);
-            last.next = lists[maxIndex];
-            last = lists[maxIndex];
+        // 注意 while 循环判断中，赋值操作和判断操作的写法，需要外围加括号
+        int maxIndex = 0;
+        while((maxIndex = getMinIndex(lists)) != -1){
+            tail.next = lists[maxIndex];
+            tail = lists[maxIndex];
             lists[maxIndex] = lists[maxIndex].next;
         }
-        return H.next;
+        return dummy.next;
     }
 
-    int getMinIndex(ListNode[] l){
+    int getMinIndex(ListNode[] nodes){
         int minIndex = -1;
         int minValue = Integer.MAX_VALUE;
-        for (int i = 0; i < l.length; i++) {
-            if(l[i] != null){
-                if(minValue >= l[i].val){
-                    minValue = l[i].val;
+        for (int i = 0; i < nodes.length; i++) {
+            if(nodes[i] != null){
+                if(minValue >= nodes[i].val){
+                    minValue = nodes[i].val;
                     minIndex = i;
                 }
             }
@@ -53,43 +57,42 @@ class Solution {
     }
 
 
-    // PriorityQueue 底层使用堆进行存储，加入的比较器使用最小堆
-    // 常用的方法是 offer 和 poll，offer插入失败返回false，而不是报异常
-    // poll 如果堆为空，则返回空
+    /*
+     * PriorityQueue 底层使用堆进行存储
+     * 常用方法: offer和 poll，offer插入失败返回false，而不是报异常
+     * poll 如果堆为空，则返回空
+     * 
+     * @date 20250327
+     */
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists == null || lists.length == 0 ){
             return null;
         }
 
-        ListNode H = new ListNode(-1);
-        ListNode last = H;
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
 
-        // Queue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
-        //     @Override
-        //     public int compare(ListNode o1, ListNode o2) {
-        //         return o1.val - o2.val;
-        //     }
-        // });
-
+        // 小根堆，升序排列
         Queue<ListNode> queue = new PriorityQueue<>((o1, o2) ->{
             return o1.val - o2.val;
         });
 
-        for (int i = 0; i < lists.length; i++) {
-            if(lists[i] != null){
+        IntStream.range(0, lists.length).forEach(i -> {
+            if(lists[i] != null) {
                 queue.offer(lists[i]);
+            }
+        });
+
+        while(!queue.isEmpty()){
+            ListNode curr = queue.poll();
+            tail.next = curr;
+            tail = curr;
+            if(curr.next != null){
+                queue.offer(curr.next);
             }
         }
 
-        while(!queue.isEmpty()){
-            ListNode node = queue.poll();
-            last.next = node;
-            last = node;
-            if(node.next != null){
-                queue.offer(node.next);
-            }
-        }
-        return H.next;
+        return dummy.next;
     }
 }
 // @lc code=end
