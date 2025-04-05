@@ -52,6 +52,7 @@ class Solution {
      * 
      * @date 20250320
      * 递归问题，寻找等价子问题，寻找出递归条件
+     *  这里使用后根遍历的方式，先拉平左右子树，然后将左子树接到右子树上
      */
     public void flatten(TreeNode root) {
         // base case

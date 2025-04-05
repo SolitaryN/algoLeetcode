@@ -20,6 +20,7 @@ class Solution {
      *  注意这里返回的对象是不一样的，左右子树都返回有节点才返回当前节点，只有一边有则直接把下游计算结果抛给上游
      * 
      * @date 20250320
+     *  使用后根遍历
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // 终止递归的条件

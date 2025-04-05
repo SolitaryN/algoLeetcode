@@ -35,9 +35,9 @@ class Solution {
      * 
      * @date 20250320
      */
-    public int kthSmallest1(TreeNode root, int k) {
+    public int kthSmallest(TreeNode root, int k) {
         // 建立大根堆
-        PriorityQueue<TreeNode> queue = new PriorityQueue<>(k, (a, b) -> b.val - a.val);
+        PriorityQueue<TreeNode> queue = new PriorityQueue<>((a, b) -> b.val - a.val);
         inOrder(root, queue, k);
         return queue.peek().val;
     }
@@ -85,7 +85,7 @@ class Solution {
      * 
      * @date 20250320
      */
-    int kthSmallest(TreeNode root, int k) {
+    int kthSmallest1(TreeNode root, int k) {
         traverse(root, k);
         return res;
     }

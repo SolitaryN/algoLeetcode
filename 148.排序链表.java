@@ -49,6 +49,7 @@ class Solution {
             }
         }
         curr.next = left == null ? right : left;
+
         return dummy.next;
     }
 }

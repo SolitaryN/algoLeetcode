@@ -59,6 +59,7 @@ class Solution {
         if(root == null)
             return;
 
+        // 这里进行剪枝操作，如果右边有值，就不需要添加左边的值了
         if(depth == ans.size())
             ans.add(root.val);
 

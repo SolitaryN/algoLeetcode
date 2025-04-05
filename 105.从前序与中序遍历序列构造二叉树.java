@@ -39,6 +39,7 @@ class Solution {
     public TreeNode myBuild(int[] preorder, int[] inorder, int preL, int preR,
         int inL, int inR, Map<Integer, Integer> index){
 
+        // 改为中序的左右指针也可
         if (preL > preR) return null;
 
         int rootVal = preorder[preL];  // 根节点的值

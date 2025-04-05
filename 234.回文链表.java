@@ -23,6 +23,7 @@ class Solution {
      * 
      * @date 20250303
      * 使用链表后续遍历，然后回退和left记录的左节点对比即可
+     *  有空间复杂度 O(n)，时间复杂度 O(n)
      */
     ListNode left;
     boolean ans = true;
@@ -63,7 +64,7 @@ class Solution {
 
         /*
          * 如果 fast 不为 null，此时节点数量为奇数
-         * 此时 slow 再往下走一步，虽然没必要，不过这样最模板，有时候需要这样
+         * slow 再往下走一步，虽然没必要，但这样最模板，有时需这样做
          */
         if (fast != null) {
             slow = slow.next;

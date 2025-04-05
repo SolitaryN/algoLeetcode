@@ -40,20 +40,20 @@ class Solution {
         if (root == null)
             return  Collections.emptyList();
 
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.offer(root);
         List<List<Integer>> ans = new ArrayList<>();
 
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
         while (!queue.isEmpty()) {
             List<Integer> level = new ArrayList<>();
 
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
+                level.add(node.val);
+
                 if (node.left != null)  queue.offer(node.left);
                 if (node.right != null) queue.offer(node.right);
-
-                level.add(node.val);
             }
 
             ans.add(level);

@@ -25,6 +25,7 @@ class Solution {
      * @date 20241002
      * 
      * @date 20250320
+     *  后根遍历解决
      */
     public TreeNode invertTree1(TreeNode root) {
         if(root == null)
