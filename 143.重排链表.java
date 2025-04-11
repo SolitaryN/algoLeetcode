@@ -19,19 +19,6 @@ import java.util.List;
  * }
  */
 class Solution {
-    public void reorderList1(ListNode head) {
-        if(head == null)
-            return;
-
-        ListNode mid = middleNode(head);
-        ListNode l1 = head;
-        ListNode l2 = mid.next;
-        mid.next = null;
-
-        l2 = reverse(l2);
-        mergeList(head, l2);
-    }
-
     // 无头结点反转
     public ListNode reverse(ListNode head){
         ListNode pre = null;
@@ -47,54 +34,39 @@ class Solution {
         return pre;
     }
 
-    void mergeList(ListNode l1, ListNode l2){
-        ListNode n1 = null;
-        ListNode n2 = null;
-        while(l1 != null && l2 != null) {
-            n1 = l1.next;
-            n2 = l2.next;
+    /*
+     * @date 20250411
+     *  快慢指针 + 链表反转 + 合并两个链表
+     *  注意断开前面链表，为方便这个操作，快慢指针写法有所不同，为偶数时，会指向前面的节点
+     */
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) return;
 
-            l1.next = l2;
-            l2.next = n1;
-
-            l1 = n1;
-            l2 = n2;
-        }
-    }
-
-    ListNode middleNode(ListNode l){
-        ListNode slow = l;
-        ListNode fast = l;
-        while(fast.next != null && fast.next.next != null){
+        // 快慢指针找到中间节点
+        // 奇数节点时，slow指中间节点，偶数时，slow指前一个节点
+        // 这样做方便切断前面的链表，同时不用考虑奇偶性
+        ListNode slow = head, fast = head;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        return slow;
-    }
 
-    public void reorderList(ListNode head) {
-        List<ListNode> l = new ArrayList<>();
+        ListNode link1 = head;
+        ListNode link2 = reverse(slow.next);
+        slow.next = null; // 断开链表
 
-        ListNode temp = head;
-        while(temp != null){
-            l.add(temp);
-            temp = temp.next;
+        // 合并两个链表这里链1比链2最多多一个节点，而且只能是链1多
+        // 否则报错
+        while (link1 != null && link2 != null) {
+            ListNode n1 = link1.next;
+            ListNode n2 = link2.next;
+
+            link1.next = link2;
+            link2.next = n1;
+
+            link1 = n1;
+            link2 = n2;
         }
-
-        int i = 0, j = l.size() - 1;
-        while(i < j){
-            l.get(i).next = l.get(j);
-            i++;
-
-            if(i == j){
-                break;
-            }
-
-            l.get(j).next = l.get(i);
-            j--;
-        }
-
-        l.get(i).next = null;
     }
 }
 // @lc code=end
