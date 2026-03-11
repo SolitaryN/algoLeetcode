@@ -79,7 +79,7 @@ class Solution {
     /*
      * date: 20250301
      */
-    public List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams4(String[] strs) {
         Map<String, List<String>> ans = new HashMap<>();
 
         for (String t : strs) {
@@ -96,6 +96,24 @@ class Solution {
             .collect(Collectors.toList());
 
         return s;
+    }
+
+    /*
+     * date: 260311
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> ans = new HashMap<>();
+
+        for (String s : strs) {
+            char[] charArray = s.toCharArray();
+            Arrays.sort(charArray);
+            String key = new String(charArray);
+            List<String> val = ans.getOrDefault(key, new ArrayList<>());
+            val.add(s);
+            ans.put(key, val);
+        }
+
+        return ans.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 }
 // @lc code=end

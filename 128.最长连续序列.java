@@ -92,7 +92,7 @@ class Solution {
      * @date 20250301
      * @desc 时间复杂度和空间复杂度都是 O(n)
      */
-    public int longestConsecutive(int[] nums) {
+    public int longestConsecutive4(int[] nums) {
         Set<Integer> set = new HashSet<>(); // 去重
         Arrays.stream(nums).forEach(ele -> set.add(ele));
 
@@ -112,6 +112,29 @@ class Solution {
             longest = Math.max(longest, currLong);
         }
         return longest;
+    }
+
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        Arrays.stream(nums).forEach(x -> set.add(x));
+
+        int ans = 0;
+        // 注意这里必须使用去重的set，因为原始数组会包含重复数字，进而造成反复计算，超时
+        for (int i : set) {
+            if (set.contains(i - 1)) {
+                continue;
+            }
+
+            int head = i;
+            int curLen = 1;
+            while (set.contains(head + 1)) {
+                head += 1;
+                curLen += 1;
+            }
+            ans = Math.max(ans, curLen);
+        }
+
+        return ans;
     }
 }
 // @lc code=end

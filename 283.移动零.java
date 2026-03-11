@@ -28,7 +28,7 @@ class Solution {
      *  因为i肯定大于等于j，所以不会出现数据丢失
      *  下面的写法比上面的写法可读性更高
      */
-    public void moveZeroes(int[] nums) {
+    public void moveZeroes3(int[] nums) {
         if (nums == null) {
             return;
         }
@@ -42,6 +42,19 @@ class Solution {
 
         for (; j < nums.length; j++) {
             nums[j] = 0;
+        }
+    }
+
+    public void moveZeroes(int[] nums) {
+        int newPoint = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[newPoint++] = nums[i];
+            }
+        }
+
+        for (; newPoint < nums.length; newPoint++) {
+            nums[newPoint] = 0;
         }
     }
 
