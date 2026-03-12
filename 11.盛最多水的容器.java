@@ -13,7 +13,7 @@ class Solution {
      * 具体来说，对于每一次移动柱子时，都会排除所有较低柱子与其它柱子组成的水面面积，
      *  只可能更小，不可能更大，因为宽减小，水面高度又受较低柱子影响，此时直接选择移动较低柱子就行。
      */
-    public int maxArea(int[] height) {
+    public int maxArea3(int[] height) {
         int left = 0, right = height.length - 1;
         int max = 0;
         while (right > left) {
@@ -27,6 +27,26 @@ class Solution {
             }
         }
         return max;
+    }
+
+    /**
+     * 20260312
+     */
+    public int maxArea(int[] height) {
+        int l = 0, r = height.length - 1;
+        int ans = 0;
+
+        while (l < r) {
+            int curArea = (r - l) * Math.min(height[l], height[r]);
+            ans = curArea > ans ? curArea : ans;
+            if (height[r] >= height[l]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+
+        return ans;
     }
 
     public int maxArea1(int[] height) {

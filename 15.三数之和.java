@@ -26,17 +26,17 @@ class Solution {
             int anchor = nums[i];
             int L = i + 1, R = len - 1;
             while (L < R) {
-                int temp = anchor + nums[L] + nums[R];
-                if(temp == 0){
+                int sum = anchor + nums[L] + nums[R];
+                int left = nums[L], right = nums[R];
+                if(sum == 0){
                     ans.add(Arrays.asList(nums[i], nums[L], nums[R]));
                     // 元素去重。确认答案后，左右都要移动到下一个不相等的元素上
-                    while (L < R && nums[L] == nums[L + 1])  ++L;
-                    while (L < R && nums[R] == nums[R - 1])  --R;
-                    L++;  R--;
-                }else if(temp < 0){
+                    while (L < R && nums[L] == left)  ++L;
+                    while (L < R && nums[R] == right)  --R;
+                }else if(sum < 0){
                     // 此时负数元素过小，左边右移
                     ++L;
-                }else if(temp > 0){
+                }else if(sum > 0){
                     // 此时正数元素过大，右边左移
                     --R;
                 }
@@ -96,9 +96,41 @@ class Solution {
                     arr.add(nums[i]);
                     res.add(arr);
                 }
-                while (i < sz - 1 && nums[i] == nums[i + 1]) i++; // 避免重复锚点，放置答案重复
+                // 避免重复锚点，放置答案重复，这里数组有序，且锚点在前，即便有重复值的元组也已经包含其中了，不用反复遍历
+                while (i < sz - 1 && nums[i] == nums[i + 1]) i++; 
             }
         }
         return res;
+    }
+
+    /**
+     * 先使用笨方法写
+     * 20260313
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int anchor = nums[i];
+            int l = i + 1, r = nums.length - 1;
+            while (l < r) {
+                int sum = nums[l] + nums[r] + anchor;
+                int lv = nums[l], rv = nums[r];
+                if (sum == 0) {
+                    // 这里注意是 nums[l] == lv，而不是 nums[l+1] == lv，否则会停到相同值的指针位置
+                    ans.add(List.of(anchor, nums[l], nums[r]));
+                    while (l < r && nums[l] == lv) ++l;
+                    while (l < r && nums[r] == rv) --r;
+                } else if (sum < 0) {
+                    while (l < r && nums[l] == lv) ++l;
+                } else if (sum > 0) {
+                    while (l < r && nums[r] == rv) --r;
+                }
+            }
+        }
+        return ans;
     }
 }
