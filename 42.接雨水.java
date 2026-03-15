@@ -15,8 +15,9 @@ class Solution {
      *          max(height[i..end])
      *      )  -  height[i]
      */
-    public int trap(int[] height) {
+    public int trap2(int[] height) {
         int len = height.length;
+        // leftMax[i] 和 rightMax[i] 表示柱子 i 包含自身高度，左右两边的最高柱子大小，方便计算水大小
         int[] leftMax = new int[len];
         int[] rightMax = new int[len];
 
@@ -45,23 +46,27 @@ class Solution {
      * @date 20250328
      *  官方題解，在动态规划的基础之上，使用双指针策略
      *  其实是同样的思路，只是没有使用额外的空间来存储左右两边的最大值
+     * 
+     *  这里通过 lmax 和 rmax 进行对比，判断左右两边谁的水平面限制出现，也就是较小值的出现。
+     *  此时就从先出现限制的那边进行计算。
+     * 
+     *  另外这里退出循环的边界条件也有讲究，这里按照直觉，其实是 l<=r 不满足时才退出循环，但是其实算法执行到 l==r 这里时，因为每次都是移动较低的边界，此时这个位置其实是数组中最高柱子的所在地，这里不会贡献存储水，所以边界条件也可以写为 l < r，但建议还是按照直觉的 l<=r
      */
-    public int trap2(int[] height) {
+    public int trap(int[] height) {
+        int l = 0, r = height.length - 1;
+        int lmax = 0, rmax = 0;
         int sum = 0;
-        int left = 0, right = height.length - 1;
-        int leftMax = 0, rightMax = 0;
 
-        while (left < right) {
-            leftMax = Math.max(leftMax, height[left]);
-            rightMax = Math.max(rightMax, height[right]);
+        while (l <= r) {
+            lmax = Math.max(lmax, height[l]);
+            rmax = Math.max(rmax, height[r]);
 
-            if (height[left] < height[right]) {
-                // 一定有 leftMax < rightMax，而且此时 height[right] == rightMax
-                sum += leftMax - height[left];
-                ++left;
+            if (lmax <= rmax) {
+                sum = sum + (lmax - height[l]);
+                l++;
             } else {
-                sum += rightMax - height[right];
-                --right;
+                sum += (rmax - height[r]);
+                r--;
             }
         }
         return sum;
