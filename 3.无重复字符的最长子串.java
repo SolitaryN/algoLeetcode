@@ -6,6 +6,7 @@
 
 // @lc code=start
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +80,29 @@ class Solution {
             right++;
         }
         return res;
+    }
+
+    /**
+     * 20260317 优化
+     */
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() <= 1)
+            return s.length();
+
+        int ans = 0, start = 0;
+        Map<Character, Integer> window = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            // 这里只有重复字符在窗口内，才进行边界更新，这样写更清晰
+            if (window.containsKey(c) && window.get(c) >= start) {
+                start = window.get(c) + 1;
+            }
+            window.put(c, i);
+
+            ans = Math.max(ans, i - start + 1);
+        }
+
+        return ans;
     }
 }
 // @lc code=end
