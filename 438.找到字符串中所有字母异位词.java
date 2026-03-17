@@ -21,7 +21,7 @@ class Solution {
      *  使用 need 记录需求字符频率，使用 window 记录当前包含需求字符的窗口状况
      *  使用 valid 记录合法性
      */ 
-    public List<Integer> findAnagrams(String s, String p) {
+    public List<Integer> findAnagrams1(String s, String p) {
         int sLen = s.length(), pLen = p.length();
         if (pLen > sLen) return Collections.emptyList();
 
@@ -69,6 +69,54 @@ class Solution {
             }
         }
 
+        return ans;
+    }
+
+    /**
+     * 20260317
+     * 这里valid用来记录某个字符是否达标，之后就算有更多该字符，这里valid也不会被改变
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        Map<Character, Integer> need = new HashMap<>();
+        for (int i = 0; i < p.length(); i++) {
+            char c = p.charAt(i);
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+
+        List<Integer> ans = new ArrayList<>();
+        Map<Character, Integer> window = new HashMap<>();
+        int len = s.length();
+        int left = 0, right = 0, valid = 0;
+        while (right < len) {
+            char c = s.charAt(right);
+            right++;
+
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+
+                // 如果有字符达标，则valid增加，这里是达标就行，之后再多加，valid不变
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+
+            // 收割结果，更新左边界
+            // 这里有时候如果左边界要更新到某种情况才停止，要用while更新
+            if (right - left == p.length()) {
+                if (valid == need.size())
+                    ans.add(left);
+
+                char leftChar = s.charAt(left);
+                left++;
+                if (need.containsKey(leftChar)) {
+                    if (window.get(leftChar).equals(need.get(leftChar))) {
+                        valid--;
+                    }
+                    window.put(leftChar, window.get(leftChar) - 1);
+                }
+            }
+        }
         return ans;
     }
 }
