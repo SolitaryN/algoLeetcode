@@ -34,7 +34,7 @@ class Solution {
      * @date 20250327
      * 经典滑动窗口解决
      */
-    public String minWindow(String s, String t) {
+    public String minWindow1(String s, String t) {
         Map<Character, Integer> need = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
 
@@ -88,7 +88,7 @@ class Solution {
      * @date 20250328
      *  window 里面保存很多冗余数据，只需要保存需要的字符即可，建议使用上面的写法
     */
-    public String minWindow1(String s, String t) {
+    public String minWindow2(String s, String t) {
         Map<Character, Integer> need = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
 
@@ -123,6 +123,53 @@ class Solution {
                 if (window.getOrDefault(cl, 0) < need.getOrDefault(cl, 0)) {
                     valid--;
                 }
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+
+
+    /**
+     * 20260319
+     * 使用滑动窗口解决，这里是滑动窗口的模板套路，主要分为窗口添加元素、收割结果窗口收缩
+     */
+    public String minWindow(String s, String t) {
+        int start = 0, minLen = Integer.MAX_VALUE;
+        Map<Character, Integer> needs = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            needs.put(c, needs.getOrDefault(c, 0) + 1);
+        }
+
+        Map<Character, Integer> window = new HashMap<>();
+        int l = 0, r = 0, valid = 0;
+        while (r < s.length()) {
+            // 窗口添加元素
+            char c = s.charAt(r);
+            r++;
+            if (needs.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (needs.get(c).equals(window.get(c))) {
+                    valid++;
+                }
+            }
+
+            // 收割结果，窗口收缩
+            while (valid == needs.size()) {
+                if (r - l < minLen) {
+                    start = l;
+                    minLen = r - l;
+                }
+
+                char leftChar = s.charAt(l);
+                if (needs.containsKey(leftChar)) {
+                    if (needs.get(leftChar).equals(window.get(leftChar))) {
+                        valid--;
+                    }
+                    window.put(leftChar, window.get(leftChar) - 1);
+                }
+                l++;
             }
         }
 
