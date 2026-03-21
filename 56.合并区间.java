@@ -9,6 +9,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Solution {
     /*
@@ -16,7 +17,7 @@ class Solution {
      * 先按照各个子区间的开头进行子区间的排序
      *  之后考虑相邻子区间之间的可能出现的 3 种情况，分别进行处理就行
      */
-    public int[][] merge(int[][] intervals) {
+    public int[][] merge1(int[][] intervals) {
         if (intervals.length == 0) return new int[0][2];
 
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
@@ -42,6 +43,47 @@ class Solution {
         ans.add(new int[]{currStart, currEnd});
 
         // toArray 函数需要指定转换的数组类型，这里指定类型就行，否则会默认转换成 Object[]
+        return ans.toArray(new int[0][0]);
+    }
+
+    /**
+     * 20260321 
+     * 
+     * 这里收集的集合应该使用 List<int[]>
+     */
+    public int[][] merge2(int[][] intervals) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        ans.add(Arrays.asList(intervals[0][0], intervals[0][1]));
+        for (int i = 1; i < intervals.length; i++) {
+            if (ans.getLast().getLast() < intervals[i][0]) {
+                ans.add(Arrays.asList(intervals[i][0], intervals[i][1]));
+            } else if (ans.getLast().getLast() >= intervals[i][1]) {
+
+            } else {
+                ans.getLast().set(1, intervals[i][1]);
+            }
+        }
+
+        return ans.stream().map(a -> new int[]{a.get(0), a.get(1)}).collect(Collectors.toList()).toArray(new int[0][0]);
+    }
+
+    public int[][] merge(int[][] intervals) {
+        List<int[]> ans = new ArrayList<>();
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        ans.add(new int[]{intervals[0][0], intervals[0][1]});
+        for (int i = 1; i < intervals.length; i++) {
+            if (ans.getLast()[1] < intervals[i][0]) {
+                ans.add(new int[]{intervals[i][0], intervals[i][1]});
+            } else if (ans.getLast()[1] >= intervals[i][1]) {
+
+            } else {
+                ans.getLast()[1] = intervals[i][1];
+            }
+        }
+
         return ans.toArray(new int[0][0]);
     }
 }

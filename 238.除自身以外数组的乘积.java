@@ -8,11 +8,11 @@
 class Solution {
     /*
      * @date 20240730 20241006
-     * 因为不让使用除法，可以统计当前数组元素的前缀乘积 和 后缀乘积，然后进行相乘操作即可
+     * 因为不让使用除法，可以统计当前数组元素的 除本身外的 前缀乘积 和 后缀乘积，然后进行相乘操作即可
      * 
      * @date 20250306
      */
-    public int[] productExceptSelf(int[] nums) {
+    public int[] productExceptSelf1(int[] nums) {
         int len = nums.length;
         int[] ans = new int[len];
         int[] pre = new int[len]; // 除了自己，前缀的乘积
@@ -29,6 +29,28 @@ class Solution {
 
         for (int i = 0; i < len; i++)
             ans[i] = pre[i] * post[i];
+
+        return ans;
+    }
+
+    /**
+     * 20260321
+     * 这里输出数组不会被计入到空间复杂度计算中
+     * 这里的空间复杂度为 O(1)
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int[] ans = new int[nums.length];
+
+        ans[0] = 1;
+        for (int i = 1; i < ans.length; i++) {
+            ans[i] = ans[i - 1] * nums[i - 1];
+        }
+
+        int postVal = 1;
+        for (int i = ans.length - 1; i >= 0; i--) {
+            ans[i] = postVal * ans[i];
+            postVal *= nums[i];
+        }
 
         return ans;
     }
