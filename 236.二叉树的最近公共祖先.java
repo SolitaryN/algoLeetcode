@@ -31,7 +31,7 @@ class Solution {
         TreeNode right = lowestCommonAncestor(root.right, p, q);
 
         if(left != null && right != null)
-            return root; // 左右都有返回当前节点，那证明当前节点就是最近公共祖先，上抛就行
+            return root; // 若当前节点左右都有返回，那证明当前节点就是最近公共祖先，上抛就行
         
         // 只有左子树或右子树返回值不为空，即左边为null或者右边为null时,直接把下游返回结果抛上去
         // 这里也隐含了左右树返回值都为空的情况，即 left==null && right==null，此时也返回null

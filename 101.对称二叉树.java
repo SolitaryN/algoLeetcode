@@ -41,6 +41,7 @@ class Solution {
         return helper(root.left, root.right);
     }
 
+    // 先根遍历，先判断根节点是否相同，然后往相对方向遍历
     boolean helper(TreeNode l, TreeNode r){
         if(l == null && r == null) return true;
         if(l == null || r == null) return false; // 经过上面过滤，下面若有null
@@ -91,7 +92,13 @@ class Solution {
         int left = 0, right = data.size() - 1;
 
         while (left < right) {
-            if (data.get(left) != data.get(right)) {
+            if (data.get(left) == null && data.get(right) == null) {
+                left++;
+                right--;
+                continue;
+            }
+
+            if (!data.get(left).equals(data.get(right))) {
                 return false;
             }
 

@@ -16,11 +16,18 @@
  *     }
  * }
  */
-public class Solution {
+class Solution {
     /*
      * @date 20240926
      * 
      * @date 20250304
+     * 
+     * 分为三段：m、n、x
+     * m + n = k
+     * m + n + x + n = 2k
+     * 则 x + n = k
+     * 则 m = x
+     * 所以从 head 到交叉点的距离等于，快指针追到满指针后，从该位置到交叉点的距离
      */
     public ListNode detectCycle(ListNode head) {
         if(head == null) return null;

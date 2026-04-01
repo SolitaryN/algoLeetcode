@@ -78,7 +78,7 @@ class Solution {
             return;
         }
         // 剪枝操作
-        if (index >= len) return;
+        if (index > len) return;
 
         for (int end = index; end < len; ++end) {
             // 回溯操作，这里选择下一个为回文串的字串

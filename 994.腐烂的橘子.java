@@ -38,7 +38,8 @@ class Solution {
 
         // epoch 表示腐烂的轮数，或者分钟数，也可以使用 round 表示
         int epoch = 0; 
-        // 判断条件要有 count > 0，如果在最后一层都是坏橘子时，会多走一次,round 多1
+        // 判断条件要有 count > 0，否则在最后一层都是坏橘子时，会多走一轮, epoch 会多1
+        // count > 0 的意思就是，当没有新鲜橘子需要腐烂时，立即停止轮次 epoch 计时
         while (count > 0 && !queue.isEmpty()) {
             epoch++;
             int size = queue.size();

@@ -27,15 +27,17 @@ class Solution {
     }
 
     void helperDFS(int index, int[] candidates,int target, int sum){
+        // 收割结果
         if(sum == target) {
             ans.add(new ArrayList<>(now));
             return;
         }
 
+        // 剪枝
         if(sum > target || index >= candidates.length)
             return;
         
-        // 不需要循环，因为只有两种选择，手动写出即可: 1、选择自己   2、选择下一个
+        // 不需要循环，因为只有两种选择: 1、选择0至多次自己   2、推进去选择下一个
         // 选择自己
         now.add(candidates[index]);
         helperDFS(index, candidates, target, sum + candidates[index]);

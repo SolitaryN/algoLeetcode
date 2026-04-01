@@ -48,5 +48,39 @@ class Solution {
         }
     }
 }
+
+
+// 这里可以不用count这个中间变量来收割结果
+class solution2 {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> now = new ArrayList<>();
+        Set<Integer> used = new HashSet<>();
+
+        backtrack(ans, now, used, nums);
+        return ans;
+    }
+
+    // 这里是不是也可以考虑使用 linkedHashMap 合并 now 和 used 这两个变量
+    void backtrack(List<List<Integer>> ans, List<Integer> now, Set<Integer> used, int[] nums){
+        if(used.size() == nums.length){
+            // 回溯算法收割结果，写入now数组的副本
+            ans.add(new ArrayList<>(now)); 
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if(!used.contains(nums[i])){
+                now.add(nums[i]);
+                used.add(nums[i]);
+
+                backtrack(ans, now, used, nums);
+
+                used.remove(nums[i]);
+                now.remove(now.size() - 1);
+            }
+        }
+    }
+}
 // @lc code=end
 

@@ -60,6 +60,8 @@ class Solution {
             return;
 
         // 这里进行剪枝操作，如果右边有值，就不需要添加左边的值了
+        // 可以这样理解，从顶端开始 depth = 0，后续每一层 depth 都加 1
+        // 这里只去收集遍历过程中每一层的深度第一次达到要求的 depth 的第一个元素
         if(depth == ans.size())
             ans.add(root.val);
 

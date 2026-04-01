@@ -49,6 +49,8 @@ class Solution {
         }
 
         int n = board.get(row).length();
+
+        // 这里行上不会有冲突，因为每次都是进入一个新的行，此时该行没有皇后
         for (int col = 0; col < n; col++) {
             // 进行剪枝操作，排除不合法选择
             if (!isValid(board, row, col)) {
@@ -68,6 +70,7 @@ class Solution {
 
     /*
      * 判断是否可以在 board[row][col] 放置皇后
+     * 这里行上不会有冲突，所以这里只检查了 列 和 左右对角线
      */
     private boolean isValid(List<String> board, int row, int col) {
         int n = board.size();

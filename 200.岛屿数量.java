@@ -32,6 +32,7 @@ class Solution1 {
         return ans;
     }
 
+    // 标记所有和陆地坐标 (row, col) 相邻的陆地为“已访问”状态
     public void dfsSignLand(int row, int col, char[][] grid){
         if(row < 0 || col < 0 || row >= grid.length 
             || col >= grid[0].length || grid[row][col] != '1'){
@@ -40,6 +41,7 @@ class Solution1 {
             return;
         }
 
+        // 标记已经被访问过
         grid[row][col] = '2';
         dfsSignLand(row - 1, col, grid);
         dfsSignLand(row + 1, col, grid);
@@ -58,23 +60,24 @@ class Solution {
         int cols = grid[0].length;
         int waterCount = 0;
 
+        // 这里每个坐标被认为是一个编号的元素
         UnionFind uf = new UnionFind(rows * cols); // 初始化并查集
 
         // 遍历网格，合并相邻的陆地
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == '1') {
-                    // 当前格子是陆地，检查上下左右
+                    // 当前格子是陆地，检查上下左右，其实检查右、下就能把所有元素串起来
                     int index = i * cols + j;
-                    if (i > 0 && grid[i - 1][j] == '1') { // 上
-                        uf.union(index, (i - 1) * cols + j);
-                    }
+                    // if (i > 0 && grid[i - 1][j] == '1') { // 上
+                    //     uf.union(index, (i - 1) * cols + j);
+                    // }
                     if (i < rows - 1 && grid[i + 1][j] == '1') { // 下
                         uf.union(index, (i + 1) * cols + j);
                     }
-                    if (j > 0 && grid[i][j - 1] == '1') { // 左
-                        uf.union(index, i * cols + (j - 1));
-                    }
+                    // if (j > 0 && grid[i][j - 1] == '1') { // 左
+                    //     uf.union(index, i * cols + (j - 1));
+                    // }
                     if (j < cols - 1 && grid[i][j + 1] == '1') { // 右
                         uf.union(index, i * cols + (j + 1));
                     }
@@ -84,14 +87,15 @@ class Solution {
             }
         }
 
-        // 总格子数 - 水格子数 = 陆地格子数
-        // 并查集中独立的集合数即为岛屿数量
+        // 并查集中独立的集合数即为岛屿数量，总连通格子数 - 水格子数 = 陆地连通格子数
+        // 水域格子从始至终都是"孤儿" —— 初始化时是独立集合，遍历时不参与任何合并，最后每个水域仍各自占一个集合名额。所以这里是直接拿这处理后总的连通分量数量减去水格子数，得解
         return uf.getCount() - waterCount;
     }
 }
 
 // 并查集实现
 class UnionFind {
+    // rank 秩，这里表示的是集合中节点的数量，初始化时，每个节点的父节点是自己，秩为1
     private int[] parent;
     private int[] rank;
     private int count; // 连通分量的数量

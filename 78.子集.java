@@ -25,6 +25,7 @@ class Solution {
         return ans;
     }
 
+    // 对于nums中的每个元素，都有两个选择，加入结果或者不加入
     void helperDfs(int[] nums, int index, List<List<Integer>> ans, Set<Integer> set){
         if(index == nums.length){
             ans.add(new ArrayList<>(set));

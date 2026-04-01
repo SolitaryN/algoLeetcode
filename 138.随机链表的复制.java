@@ -5,8 +5,12 @@
  */
 
 // @lc code=start
-/*
 // Definition for a Node.
+
+import java.util.Map;
+import java.util.HashMap;
+
+
 class Node {
     int val;
     Node next;
@@ -18,10 +22,6 @@ class Node {
         this.random = null;
     }
 }
-*/
-
-import java.util.Map;
-import java.util.HashMap;
 
 class Solution {
     /*

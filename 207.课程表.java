@@ -59,6 +59,8 @@ class Solution {
      * 
      * @date 20250323
      * 使用邻接表法表示有向图（这里是顺邻接表，不是逆邻接表，即相邻元素表示下游节点）
+     * 
+     * 这里应该是一个或多个有向无环图 DAG ，同一个节点在一个访问轮次中只能被访问一次
      */
     public boolean canFinish2(int numCourses, int[][] prerequisites) {
         // 构建图

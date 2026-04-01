@@ -32,6 +32,8 @@ class Solution {
      * @date 20240930
      * 
      * @date 20250304
+     * 
+     * 使用dummy头结点更方便
      */
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         if (list1 == null || list2 == null) {
@@ -40,20 +42,20 @@ class Solution {
 
         // 给链表加入头结点
         ListNode dummy = new ListNode(-1);
-        ListNode head = dummy;        
+        ListNode currPoint = dummy;        
 
         while (list1 != null && list2 != null) {
             if (list1.val > list2.val) {
-                head.next = list2;
+                currPoint.next = list2;
                 list2 = list2.next;
             } else {
-                head.next = list1;
+                currPoint.next = list1;
                 list1 = list1.next;
             }
-            head = head.next;
+            currPoint = currPoint.next;
         }
 
-        head.next = list1 == null ? list2 : list1;
+        currPoint.next = list1 == null ? list2 : list1;
         return dummy.next;
     }
 }
