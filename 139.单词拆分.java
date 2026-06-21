@@ -35,7 +35,7 @@ class Solution {
                     continue;
 
                 int wl = wordDict.get(j).length(); // 某个word的长度
-                // 匹配当前字符
+                // 匹配当前字符，如果已经有判断为ture了，这里会一直为true，其实可以考虑为true时直接break
                 dp[i] = (dp[i] || ( dp[i-wl] && s.substring(i-wl, i).equals(wordDict.get(j)) ));
             }
 

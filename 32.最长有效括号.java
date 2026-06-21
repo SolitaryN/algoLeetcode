@@ -53,6 +53,10 @@ class Solution {
      * @date 20250312
      * 这里dp数组更加统一，使用下标来表示字符位置
      * 这里需要注意边界情况的处理，即左边界为0时，不需要再往前寻找合法字符串
+     * 
+     * 状态：dp[i] 表示以下标为 i 的字符接尾的最长合法字符串长度
+     * 选择：i 是否为 0、dp[i] 是否为左括号
+     * 递推公式：.... 
      */
     public int longestValidParentheses(String s) {
         Stack<Integer> stk = new Stack<>();

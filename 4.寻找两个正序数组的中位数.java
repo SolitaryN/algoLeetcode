@@ -45,6 +45,10 @@ class Solution {
      * 把该问题化为寻找第k小的数
      * 这里就是找(m+n)/2的数，就可以使用二分查找，时间复杂度为O(log(m+n))
      * 讲的不错： https://www.bilibili.com/video/BV1z54y1b7wb/
+     * 
+     * 
+     * 20260403
+     * 其实也就是找到一种方法分割上下数组的方法，建议通用方法
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length, n = nums2.length;

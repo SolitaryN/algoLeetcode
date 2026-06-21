@@ -33,8 +33,9 @@ class Solution {
                 left = mid + 1;
         }
 
-        // 注意这里和下面的寻找右边界不一样,这里是处理target不在这个数组区间，且大于数组最大值的情况
+        // 注意 left >= nums.length 和下面的寻找右边界不一样,这里是处理target不在这个数组区间，且大于数组最大值的情况
         if (left >= nums.length) return -1;
+
         return nums[left] == target ? left : -1;
     }
 
@@ -51,8 +52,9 @@ class Solution {
                 left = mid + 1;
         }
 
-        // 注意这里和上面的寻找左边界不一样，这里是处理target不在这个数组区间，且小于数组最小值的情况
+        // 注意 right < 0 和上面的寻找左边界不一样，这里是处理target不在这个数组区间，且小于数组最小值的情况
         if (right < 0) return -1;
+
         return nums[right] == target ? right : -1;
     }
 }

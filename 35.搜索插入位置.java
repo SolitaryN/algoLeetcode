@@ -5,7 +5,7 @@ class Solution {
      *  int mid = left + (right - left) / 2; // 相当于 (left + right)/2
      * 
      * @date 20250321
-     * 二分查找的模板，注意这里插入位置一定是 left
+     * 二分查找的模板，注意这里插入位置一定是 left，自己模拟下就知道
      */
     public int searchInsert(int[] nums, int target) {
         int len = nums.length;

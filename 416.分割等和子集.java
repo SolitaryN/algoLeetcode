@@ -56,6 +56,10 @@ class Solution {
      * 上述解法压缩空间复杂度
      * 
      * @date 20250309
+     * 
+     * 状态 j 表示：当前是否可以用若干个数，凑出“和为 j”的子集
+     * dp[j] = 是否可以凑出 j
+     * dp[j] = 原本就能凑出 j   或者  通过“凑出 j - nums[i] + nums[i]”得到 j
      */
     public boolean canPartition(int[] nums) {
         int sum = Arrays.stream(nums).sum();

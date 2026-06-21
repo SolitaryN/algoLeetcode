@@ -45,7 +45,6 @@ class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
 
-        // 多创建和初始化一列一行，内部值刚好为0，方便递推，无需处理边界
         int[] dp = new int[numRows + 1];
         dp[1] = 1;
         ans.add(Arrays.asList(dp[1]));

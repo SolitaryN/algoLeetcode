@@ -10,6 +10,8 @@
  * @date 20250305
  * 详细解析参见：
     https://labuladong.online/algo/practice-in-action/find-median-from-data-stream/
+
+    白话文：使用大小根堆，一个堆保存一半，然后堆顶就是中间的元素
  */
 
 import java.util.PriorityQueue;

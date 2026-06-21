@@ -16,6 +16,10 @@ class Solution {
      * 
      * @date 20250325
      * 背诵题，妈的
+     * 
+     * 
+     * 这个讲的很形象，把它们想想成一个个高低的折线点，然后损失最小的值
+     * bilibili.com/video/BV1dT4y1y78u/
      */
     public void nextPermutation(int[] nums) {
         int i = nums.length - 2;

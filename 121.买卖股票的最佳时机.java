@@ -62,6 +62,7 @@ class Solution {
             dp[i][1] = Math.max(dp[i-1][1], - prices[i]); // 这里只买卖一次，所以这里是 - prices[i]
         }
 
+        // 返回最后一天没有持有股票的状态, 此时他就是对应的最大收益
         return dp[n-1][0];
     }
 }

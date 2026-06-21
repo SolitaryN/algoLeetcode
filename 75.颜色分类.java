@@ -39,6 +39,8 @@ class Solution {
      * 对数组进行一次遍历，用双指针保存 0 和 2 的插入位置
      * 
      * @date 20250325
+     * 
+     * 把 0 和 2 都复位，则 1 自然就复位了
      */
     public void sortColors(int[] nums) {
         int n = nums.length;
