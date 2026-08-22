@@ -31,6 +31,14 @@ class Solution {
         return ans;
     }
 
+    /**
+     * 
+     * @param row 当前行
+     * @param col 当前列
+     * @param board 记字板
+     * @param index 当前匹配到该单词的字符下标
+     * @param word 单词
+     */
     void backtrack(int row, int col, char[][] board, int index, String word) {
         int len = word.length();
         int nr = board.length, nc = board[0].length;

@@ -14,6 +14,9 @@ import java.util.Map;
  * @date 20250304
  * 官方题解，使用自定义双向链表 + hashmap实现
  * https://leetcode.cn/problems/lru-cache/solutions/259678/lruhuan-cun-ji-zhi-by-leetcode-solution
+ * 
+ * 面试时，建议使用下面的写法，让面试官知道你懂底层
+ * 这里放在最前面的元素是最近访问过的元素
  */
 class LRUCache2{
     class DLinkedNode {
@@ -67,12 +70,16 @@ class LRUCache2{
                 cache.remove(tail.key);
                 --size;
             }
-        }
-        else {
+        } else {
             // 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部
             node.value = value;
             makeRecently(node);
         }
+    }
+
+
+    private void makeRecently(DLinkedNode node) {
+        moveToHead(node);
     }
 
     private void addToHead(DLinkedNode node) {
@@ -92,10 +99,6 @@ class LRUCache2{
         addToHead(node);
     }
 
-    private void makeRecently(DLinkedNode node) {
-        moveToHead(node);
-    }
-
     // 移出最老元素
     private DLinkedNode removeTail() {
         DLinkedNode res = tail.prev;
@@ -111,6 +114,7 @@ class LRUCache2{
  * @date 20250304
  */
 class LRUCache1 {
+    // LinkedHashMap 结构中，元素先插入在前，后插入在后；新元素追加到双向链表尾部。
     LinkedHashMap<Integer, Integer> map;
     int capacity;
 

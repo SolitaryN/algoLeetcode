@@ -22,23 +22,24 @@ class Solution {
             return Collections.emptyList();
 
         List<Integer> ans = new ArrayList<Integer>();
-        int nr = matrix.length, nc = matrix[0].length;
-        int cLeft = 0, cRight = nc - 1, rTop = 0, rBottom = nr - 1;
+        int lines = matrix.length, columes = matrix[0].length;
+        int columeLeft = 0, columeRight = columes - 1;
+        int rowTop = 0, RowBottom = lines - 1;
 
-        for(;cLeft <= cRight && rTop <= rBottom;
-                cLeft++, cRight--, rTop++, rBottom-- ) {
-            for (int column = cLeft; column <= cRight; column++)
-                ans.add(matrix[rTop][column]);
+        for(;columeLeft <= columeRight && rowTop <= RowBottom;
+                columeLeft++, columeRight--, rowTop++, RowBottom-- ) {
+            for (int column = columeLeft; column <= columeRight; column++)
+                ans.add(matrix[rowTop][column]);
 
-            for (int row = rTop + 1; row <= rBottom; row++)
-                ans.add(matrix[row][cRight]);
+            for (int row = rowTop + 1; row <= RowBottom; row++)
+                ans.add(matrix[row][columeRight]);
 
-            if (cLeft < cRight && rTop < rBottom) {
-                for (int column = cRight - 1; column > cLeft; column--)
-                    ans.add(matrix[rBottom][column]);
+            if (columeLeft < columeRight && rowTop < RowBottom) {
+                for (int column = columeRight - 1; column > columeLeft; column--)
+                    ans.add(matrix[RowBottom][column]);
 
-                for (int row = rBottom; row > rTop; row--)
-                    ans.add(matrix[row][cLeft]);
+                for (int row = RowBottom; row > rowTop; row--)
+                    ans.add(matrix[row][columeLeft]);
             }
         }
 

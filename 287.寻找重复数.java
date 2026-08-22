@@ -41,6 +41,9 @@ class Solution {
      * 二分值域进行查找，注意是 l < r 为循环终止，此时 l 或 r 就为解
      * 
      * @date 20250325
+     * 
+     * @date 20260821
+     * 注意，二分的是 值域 ，拿这值域的中间值，遍历整个数组查找元素对应个数
      */
     public int findDuplicate(int[] nums) {
         // 这里 l 和 r 是值域，而不是代表下标

@@ -61,6 +61,8 @@ class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         List<Integer> ans = new ArrayList<>();
         Deque<Integer> deque = new LinkedList<>();
+
+        // 初始化单调队列
         for (int i = 0; i < k; i++) {
             while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i] ) {
                 deque.pollLast();
@@ -69,8 +71,10 @@ class Solution {
         }
         ans.add(nums[deque.peekFirst()]);
 
+
         for (int i = k; i < nums.length; i++) {
             // 这里写while更符合直觉，把居于高位的不在窗口内的数据删除了，虽然用if也对，此时窗口只可能排除一个值，也就是最左边的那个，保证它不是最大值就行，但用while更符合直觉
+            // 为什么排除一个值就可以：队列里面的值对应的下标只可能从小到大，如果要从窗口中排除一个旧值，此时只可能排除最左边的那个，此时它刚好也是上个窗口的最大值
             while (!deque.isEmpty() && deque.peekFirst() <= i - k) {
                 deque.pollFirst();
             }

@@ -25,8 +25,15 @@ class Solution {
      *        和text1[0...i-1]和text2[0...j-1]的最长公共子序列之间的关系
      * 
      * 得到转移方程，求解
+     * 
+     * @date 20260822
+     * DP 本质就是带记忆的递归，最重要的视角是：站在当前局面，不去管过去怎么来的
+     * 做完选择之后，落到一个规模更小的子问题，子问题和原问题结构一模一样，只是规模变小
+     * 
+     * 递归是 自顶向下。大问题拆小问题；
+     * DP 是 自底向上。先把小问题全部算好，再推大问题
      */
-   public int longestCommonSubsequence(String text1, String text2) {
+    public int longestCommonSubsequence(String text1, String text2) {
         int len_text1 = text1.length(); // 行
         int len_text2 = text2.length(); // 列
 

@@ -6,7 +6,7 @@
 
 // @lc code=start
 
-class Solution1 {
+class Solution {
     /*
      * @date 20241008
      * 岛屿问题，使用 dfs 或 bfs 一般都可以解决，使用标记以访问节点的方式等
@@ -15,6 +15,11 @@ class Solution1 {
      * 
      * @date 20250323
      * 建议还是使用dfs、bfs解决
+     * 
+     * @date 20260817 这里不能省略上和左的迂回搜索，主要为了避免凹型岛屿情况
+     *  例子：如果是下面型号岛屿，如果只考虑往右、往下方向，此时会漏扫，造成答案是 2
+     *      1 0 1
+     *      1 1 1
      */
     public int numIslands(char[][] grid) { 
         int ans = 0;
@@ -42,6 +47,7 @@ class Solution1 {
         }
 
         // 标记已经被访问过
+        // @date 20260817 这里不能省略上和左的迂回搜索，主要为了避免凹型岛屿情况
         grid[row][col] = '2';
         dfsSignLand(row - 1, col, grid);
         dfsSignLand(row + 1, col, grid);
@@ -50,7 +56,7 @@ class Solution1 {
     }
 }
 
-class Solution {
+class Solution1 {
     /*
      * @date 20250323
      * 使用并查集解决

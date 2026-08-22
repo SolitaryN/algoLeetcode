@@ -61,8 +61,8 @@ class Solution {
         if (!cachedNode.containsKey(head)) {
             Node headNew = new Node(head.val);
             cachedNode.put(head, headNew);
-            headNew.next = copyRandomList(head.next);
-            headNew.random = copyRandomList(head.random);
+            headNew.next = copyRandomList1(head.next);
+            headNew.random = copyRandomList1(head.random);
         }
         return cachedNode.get(head);
     }

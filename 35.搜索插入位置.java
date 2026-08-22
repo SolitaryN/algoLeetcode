@@ -6,6 +6,9 @@ class Solution {
      * 
      * @date 20250321
      * 二分查找的模板，注意这里插入位置一定是 left，自己模拟下就知道
+     * 
+     * @date 20260818
+     * 插入位置一定是 left，记着吧，还有就是中间坐标计算方式注意
      */
     public int searchInsert(int[] nums, int target) {
         int len = nums.length;

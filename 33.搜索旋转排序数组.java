@@ -32,6 +32,7 @@ class Solution {
                 else
                     left = mid + 1;
 
+
             } else if (nums[left] > nums[mid]) { // 右边为有序区间
                 if(target > nums[mid] && target <= nums[right])
                     left = mid + 1;

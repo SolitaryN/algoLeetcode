@@ -5,6 +5,9 @@
  */
 
 // @lc code=start
+
+import java.util.stream.IntStream;
+
 class Solution {
     /*
      * @date 20241001
@@ -38,6 +41,10 @@ class Solution {
      * 使用动态规划求解，两种状态（左右边界）
      * 
      * @date 20250325
+     * 
+     * @date 20260822
+     * 写出递推公式后，自然你就知道需要怎么安排数组维度对应内容，以及推理顺序
+     * 这里因为在第 x 行推导的时候，你要依赖 x - 1 行的内容，自然而然就是下面的写法
      */
     public String longestPalindrome(String s) {
         if (s == null || s.length() < 2)
@@ -49,11 +56,14 @@ class Solution {
         int maxLen = 0;  //最长回文串的长度
 
         // 注意递推策略，先推 0~n, 后 0~n+1，因为后面的需要依赖 0~n 的计算结果
+        // 这里你也可以选择，初始化 行列 相等时为 true，则不需要下面的 r == (l + 2) 的判断也可
         boolean[][] dp = new boolean[len][len];
+        // IntStream.range(0, len).forEach(i -> dp[i][i] = true);
         for (int r = 1; r < len; r++) {
             for (int l = 0; l < r; l++) {
-                if (s.charAt(l) == s.charAt(r) &&
-                    (r == l + 1 || r == l + 2 || dp[l + 1][r - 1])) {
+                if (s.charAt(l) == s.charAt(r) 
+                    && (r == l + 1 || r == l + 2 || dp[l + 1][r - 1]) ) {
+                    // && (r == l + 1 || dp[l + 1][r - 1]) ) {
                     // r==l + 1 和 r==l + 2 判断是否是 basecase，类似于：aa 和 aba
                     // 属于边界情况，此时不看 dp[l + 1][r - 1]
                     dp[l][r] = true;

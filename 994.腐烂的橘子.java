@@ -39,7 +39,7 @@ class Solution {
         // epoch 表示腐烂的轮数，或者分钟数，也可以使用 round 表示
         int epoch = 0; 
         // 判断条件要有 count > 0，否则在最后一层都是坏橘子时，会多走一轮, epoch 会多1
-        // count > 0 的意思就是，当没有新鲜橘子需要腐烂时，立即停止轮次 epoch 计时
+        // count == 0 表示没有新鲜橘子了，停止轮次 epoch 计时
         while (count > 0 && !queue.isEmpty()) {
             epoch++;
             int size = queue.size();
@@ -53,16 +53,19 @@ class Solution {
                     count--; // 新鲜橘子减一
                     queue.add(new int[]{r-1, c}); // 坏橘子入队
                 }
+
                 if (r+1 < nr && grid[r+1][c] == 1) {
                     grid[r + 1][c] = 2;
                     count--;
                     queue.add(new int[]{r+1, c});
                 }
+
                 if (c-1 >= 0 && grid[r][c - 1] == 1) {
                     grid[r][c-1] = 2;
                     count--;
                     queue.add(new int[]{r, c-1});
                 }
+
                 if (c+1 < nc && grid[r][c+1] == 1) {
                     grid[r][c+1] = 2;
                     count--;

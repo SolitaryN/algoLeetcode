@@ -56,7 +56,7 @@ class Solution {
      * @date 20241003
      * 使用栈来进行中序遍历，计数，到点输出
      * 
-     * 逻辑很混乱，不建议使用
+     * 使用栈数据结构来进行栈操作，应该熟练掌握，看自己
      */
     public int kthSmallest2(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<>();
@@ -84,6 +84,8 @@ class Solution {
      * 利用 BST 的中序遍历特性
      * 
      * @date 20250320
+     * 
+     * 个人觉得应该被建议使用的方法
      */
     int kthSmallest1(TreeNode root, int k) {
         traverse(root, k);

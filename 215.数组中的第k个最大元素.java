@@ -20,7 +20,7 @@ class Solution {
      * 
      * @date 20250328
      */
-    public int findKthLargest(int[] nums, int k) {
+    public int findKthLargest3(int[] nums, int k) {
         // 默认是小根堆
         Queue<Integer> queue = new PriorityQueue<>();
 
@@ -47,7 +47,6 @@ class Solution {
         return quickselect(_nums, 0, n - 1, n - k);
     }
 
-
     int quickselect(int[] nums, int l, int r, int k) {
         if (l == r) return nums[k];
         int x = nums[l], i = l - 1, j = r + 1;
@@ -63,6 +62,74 @@ class Solution {
         if (k <= j) return quickselect(nums, l, j, k);
         else return quickselect(nums, j + 1, r, k);
     }
+
+
+    /**
+     * @date 20260818
+     * 更加直观的写法
+     */
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        // 第k大 → 升序数组中下标 n-k 的元素
+        int targetIndex = n - k;
+        return quickSelect(nums, 0, n - 1, targetIndex);
+    }
+
+    /**
+     * 在 [left, right] 区间内寻找下标 targetIndex 的元素
+     * @param nums 数组
+     * @param left 左边界
+     * @param right 右边界
+     * @param targetIndex 需要找到的全局下标
+     * @return 目标数值
+     */
+    private int quickSelect(int[] nums, int left, int right, int targetIndex) {
+        // 区间只剩一个元素，直接返回
+        if (left == right) {
+            return nums[left];
+        }
+
+        // 分区：返回分割点 j，[left,j] ≤ pivot，[j+1,right] ≥ pivot
+        int partitionPos = partition(nums, left, right);
+
+        if (targetIndex <= partitionPos) {
+            // 目标落在左区间 [left, partitionPos]
+            return quickSelect(nums, left, partitionPos, targetIndex);
+        } else {
+            // 目标落在右区间 [partitionPos+1, right]
+            return quickSelect(nums, partitionPos + 1, right, targetIndex);
+        }
+    }
+
+    /**
+     * 荷兰国旗双向分区（快排经典 do-while 写法）
+     * 选定 nums[left] 作为pivot
+     * 返回分割位置 pos
+     * [l, pos] ≤ pivot
+     * [pos+1, r] ≥ pivot
+     */
+    private int partition(int[] nums, int l, int r) {
+        int pivot = nums[l];
+        int i = l - 1;
+        int j = r + 1;
+
+        while (i < j) {
+            do {
+                i++;
+            } while (nums[i] < pivot);
+
+            do {
+                j--;
+            } while (nums[j] > pivot);
+
+            if (i < j) {
+                // 交换左右不符合条件元素
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        return j;
+    }
 }
 // @lc code=end
-

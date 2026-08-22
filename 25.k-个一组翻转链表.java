@@ -22,6 +22,7 @@ class Solution {
         ListNode preTail = H;
 
         while(checkCount(curr, k)){
+            // reverseK 返回头结点、和下一个子链的头结点
             ListNode[] s = reverseK(curr, k);
             preTail.next = s[0]; // 尾部连接上下一个反转子链
             preTail = curr; // 更新尾部
@@ -70,6 +71,7 @@ class Solution {
         // 出递归条件，检查从head开始是否有k个节点
         if(!check(head, k)) return head;
         
+        // 可以理解为二叉树前序遍历
         int count = 0;
         ListNode curr = head;
         ListNode pre = null;

@@ -12,6 +12,10 @@ class Solution {
      * 二分查找，两种查法，一次二分查找 和 两次二分查找
      * 下面是两次二分查找
      * 
+     * 对于两次二分查找来说，要明确的知道最后 end 和 begin 落到的地方
+     *      end：最后一个 ≤ target 的位置
+     *      begin：第一个 > target 的位置（也就是你说的插入点）
+     * 
      * @date 20250321
      */
     public boolean searchMatrix1(int[][] matrix, int target) {
@@ -30,6 +34,7 @@ class Solution {
                 begin = mid + 1;
         }
 
+        // 只可能在查找的时候，end 变为 -1，
         if (end < 0) return false; // 如果要查的行不存在，则返回，此时 end 为 -1
 
         // 此时end为要查找的行，这里在写算法的时候代入例子，推算即可得到end为查找行

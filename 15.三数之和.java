@@ -53,7 +53,7 @@ class Solution {
      *  1）锚点的选择（这里锚点的更新选择不会发生重复）
      *  2) 把nSum问题化解成 (n-1)Sum问题，直到递归到2Sum问题
      */
-    public List<List<Integer>> threeSum2(int[] nums) {
+    public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         // n 为 3，从 nums[0] 开始计算和为 0 的三元组
         return nSumTarget(nums, 3, 0, 0);
@@ -78,11 +78,12 @@ class Solution {
                 int sum = nums[lo] + nums[hi];
                 int left = nums[lo], right = nums[hi];
                 if (sum < target) {
-                    while (lo < hi && nums[lo] == left) lo++;
+                    lo++;
                 } else if (sum > target) {
-                    while (lo < hi && nums[hi] == right) hi--;
+                    hi--;
                 } else {
                     res.add(new ArrayList<>(Arrays.asList(left, right)));
+                    // 排除相同的元素避免重复
                     while (lo < hi && nums[lo] == left) lo++;
                     while (lo < hi && nums[hi] == right) hi--;
                 }
@@ -97,6 +98,7 @@ class Solution {
                     res.add(arr);
                 }
                 // 避免重复锚点，放置答案重复，这里数组有序，且锚点在前，即便有重复值的元组也已经包含其中了，不用反复遍历
+                // 这里因为外围还有一个i+1，所以最后i停到最后一个和当前元素相同的下标
                 while (i < sz - 1 && nums[i] == nums[i + 1]) i++; 
             }
         }
@@ -107,7 +109,7 @@ class Solution {
      * 先使用笨方法写
      * 20260313
      */
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum2(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<>();
 

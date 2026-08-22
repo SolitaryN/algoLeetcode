@@ -41,11 +41,13 @@ class Solution {
     public int[] productExceptSelf(int[] nums) {
         int[] ans = new int[nums.length];
 
+        // 先用 ans 保存所有元素的前缀积
         ans[0] = 1;
         for (int i = 1; i < ans.length; i++) {
             ans[i] = ans[i - 1] * nums[i - 1];
         }
 
+        // 然后从后往前算，使用局部变量保存后缀积，一直推
         int postVal = 1;
         for (int i = ans.length - 1; i >= 0; i--) {
             ans[i] = postVal * ans[i];

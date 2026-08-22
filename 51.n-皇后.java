@@ -70,7 +70,7 @@ class Solution {
 
     /*
      * 判断是否可以在 board[row][col] 放置皇后
-     * 这里行上不会有冲突，所以这里只检查了 列 和 左右对角线
+     * 这里行上不会有冲突，所以只检查 列 和 左右对角线
      */
     private boolean isValid(List<String> board, int row, int col) {
         int n = board.size();

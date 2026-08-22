@@ -59,6 +59,7 @@ class Solution {
 
     /*
      * PriorityQueue 底层使用堆进行存储
+     * 小根堆每次返回K个元素中最小的，大根堆返回最大的
      * 常用方法: offer和 poll，offer插入失败返回false，而不是报异常
      * poll 如果堆为空，则返回空
      * 
@@ -73,6 +74,7 @@ class Solution {
         ListNode tail = dummy;
 
         // 小根堆，升序排列
+        // 使用小根堆，因为小根堆每次都返回K个元素中最小的一个
         Queue<ListNode> queue = new PriorityQueue<>((o1, o2) ->{
             return o1.val - o2.val;
         });

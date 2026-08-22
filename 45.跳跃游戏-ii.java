@@ -26,6 +26,8 @@ class Solution {
         // 所以在访问最后一个元素之前，边界一定大于等于最后一个位置，否则就无法跳到最后一个位置了。
         for (int i = 0; i < length - 1; i++) {
             maxPosition = Math.max(maxPosition, i + nums[i]); 
+
+            // 当到达上一个区间边界时，更新下一个边界，同时步数加 1
             if (i == end) {
                 end = maxPosition;
                 steps++;

@@ -22,7 +22,7 @@ class Solution {
      */
     public int coinChange(int[] coins, int amount) {
         // 数组大小为 amount + 1，初始值设置为 amount + 1
-        // 这里即为dp[i]的最大值,因为不能有比 1 元还小的硬币面值，这里只是假设有面值为1的硬币
+        // 这里不能有比 1 再小的面值，同时就算存在 1 元面值，这里需要金币数量刚好超过 1
         int[] dp = new int[amount + 1];
         Arrays.fill(dp, amount + 1);
 

@@ -141,8 +141,8 @@ class Solution {
             char c = t.charAt(i);
             needs.put(c, needs.getOrDefault(c, 0) + 1);
         }
-
         Map<Character, Integer> window = new HashMap<>();
+
         int l = 0, r = 0, valid = 0;
         while (r < s.length()) {
             // 窗口添加元素

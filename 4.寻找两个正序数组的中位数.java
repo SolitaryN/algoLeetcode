@@ -64,9 +64,11 @@ class Solution {
         }
     }
 
-    /*
-     * s1Idx 和 s2Idx 表示两个数组中剩余未处理数据的起始下标
-     * kth 表示要找第kth个数
+    /**
+     * @param s1Idx s1Idx 和 s2Idx 表示两个数组中剩余未处理数据的起始下标
+     * @param s2Idx
+     * @param kth 表示要找第kth个数
+     * @return
      */
     int helperFind(int[] nums1, int s1Idx, int[] nums2, int s2Idx, int kth){
         // 出递归的条件，如果一个数组已经全部处理完了，就直接返回另一个数组的第kth个数

@@ -11,6 +11,9 @@ class Solution {
      * 注意这里尽量用 if ... else if .... else if ... ，否则可能出现 == 判断之后，又走了后面的 else 逻辑
      * 
      * @date 20250321
+     * 
+     * @date 20260818
+     * 注意最大区别就是元素相等时，区间往左 或 往右 收缩，然后明确最后是采用left还是right(想边界条件就行)
      */
     public int[] searchRange(int[] nums, int target) {
         int left = leftRound(nums, target);

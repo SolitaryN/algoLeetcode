@@ -18,12 +18,17 @@ class Solution {
     /*
      * @date 20241009
      * 动态规划 + 回溯
-     * dp 数组只有上三角矩阵有意义，如果 i > j（即子串的起始位置在结束位置之后），这样的子串是无效的，因此 dp[i][j] 在这种情况下没有意义。
+     * dp 数组只有上三角矩阵有意义，如果 i > j（即子串的起始位置在结束位置之后）
+     *  这样的子串是无效的，因此 dp[i][j] 在这种情况下没有意义。
+     * 
      * 首先使用动态规划，求出所有字串是否是回文串，加快判断子串是否回文的速度，再使用回溯求解
      * 
      * @date 20250322
+     * 
+     * @date 20260817
+     * 这里字符分割的位置是确保和前面某个字符构成回文串的地方
      */
-    public List<List<String>> partition1(String s) {
+    public List<List<String>> partition(String s) {
         int len = s.length();
         dp = new boolean[len][len];
         IntStream.range(0,len).forEach(i -> dp[i][i] = true);
@@ -33,8 +38,9 @@ class Solution {
         // 25 的求解依赖于 34， 15 的求解依赖于 24，最下方画出三角
         for (int right = 0; right < len; ++right) {
             for (int left = 0; left < right; ++left)
-                dp[left][right] = (s.charAt(left) == s.charAt(right)) 
-                    && (dp[left + 1][right - 1] || right - left <= 2 ) ;
+                dp[left][right] = 
+                    (s.charAt(left) == s.charAt(right))
+                    && (right - left <= 2 || dp[left + 1][right - 1] ) ;
         }
 
         dfs(s, 0);
@@ -42,6 +48,11 @@ class Solution {
         return ans;
     }
 
+    /**
+     * 
+     * @param str 被分割的字符串
+     * @param index 当前进行分割的字符下标
+     */
     public void dfs(String str, int index) {
         int len = str.length();
         if (index == len) {
@@ -52,6 +63,7 @@ class Solution {
         // 剪枝操作
         if (index >= len) return;
 
+        // index 记录子串开始的字符下标，end 记录搜索的子串结束下标
         for (int end = index; end < len; ++end) {
             // 回溯操作，这里选择下一个为回文串的字串
             if (dp[index][end]) {
@@ -62,11 +74,12 @@ class Solution {
         }
     }
 
+
     /*
      * @date 20250322
      * 这里只使用回溯，不辅助使用动态规划
      */
-    public List<List<String>> partition(String s) {
+    public List<List<String>> partition1(String s) {
         dfs2(s, 0);
         return ans;
     }

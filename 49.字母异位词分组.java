@@ -115,6 +115,21 @@ class Solution {
 
         return ans.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
+
+    public List<List<String>> groupAnagramsx(String[] strs) {
+        Map<String, List<String>> ans = new HashMap<>();
+
+        for (int i = 0; i < strs.length; i++) {
+            char[] chars = strs[i].toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            List<String> value = ans.getOrDefault(key, new ArrayList<>());
+            value.add(strs[i]);
+            ans.put(key, value);
+        }
+
+        return new ArrayList<>(ans.values());
+    }
 }
 // @lc code=end
 

@@ -20,6 +20,9 @@ class Solution {
      * @date 20250322
      * 对于一个元素来说，有两种选择：选择自己、选择下一个元素
      * 回溯结束条件：和等于 target 或 大于 target 或 下标越界
+     * 
+     * @date 20260817
+     * 注意这里 candidates 中的元素都为 正数
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         helperDFS(0, candidates, target, 0);

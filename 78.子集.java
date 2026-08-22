@@ -25,6 +25,13 @@ class Solution {
         return ans;
     }
 
+    /**
+     * 对于每个元素都当成二叉树的一个节点处理，加入 或 不加入 两种选择
+     * @param nums
+     * @param index 当前进行选择的元素下标
+     * @param ans
+     * @param set 当前元素集合
+     */
     // 对于nums中的每个元素，都有两个选择，加入结果或者不加入
     void helperDfs(int[] nums, int index, List<List<Integer>> ans, Set<Integer> set){
         if(index == nums.length){

@@ -17,7 +17,7 @@ class Solution {
         int left = 0, right = nums.length - 1;
 
         while (left <= right) {
-            // 有序时
+            // 有序时，必须有 = ，因为有只有一个元素的情况
             if(nums[left] <= nums[right]) 
                 return nums[left];
 
@@ -27,7 +27,7 @@ class Solution {
                 // 无序时，当左边有序时，最小值一定在右边
                 left = mid + 1;
             } else if (nums[left] > nums[mid]) {
-                // 无序时，当左边无序时，最小值一定在左边，同时也可能是 mid 下标元素最小
+                // 无序时，当左边无序时，最小值一定在左边，同时也可能 mid 下标对应元素最小
                 // 因mid此时可能为最小值，所有是right = mid,而不是right = mid - 1
                 right = mid;
             }

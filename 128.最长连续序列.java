@@ -114,7 +114,7 @@ class Solution {
         return longest;
     }
 
-    public int longestConsecutive(int[] nums) {
+    public int longestConsecutives(int[] nums) {
         Set<Integer> set = new HashSet<>();
         Arrays.stream(nums).forEach(x -> set.add(x));
 
@@ -132,6 +132,30 @@ class Solution {
                 curLen += 1;
             }
             ans = Math.max(ans, curLen);
+        }
+
+        return ans;
+    }
+
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        Arrays.stream(nums).forEach(num -> set.add(num));
+        int ans = 0;
+
+        // 先找开头。  时间复杂度O(n + n) = O(n)
+        for (int i : set) {
+            if (set.contains(i - 1)) {
+                continue;
+            }
+
+            int head = i;
+            int currLen = 1;
+            while (set.contains(head + 1)) {
+                head++;
+                currLen++;
+            }
+
+            ans = Math.max(ans, currLen);
         }
 
         return ans;

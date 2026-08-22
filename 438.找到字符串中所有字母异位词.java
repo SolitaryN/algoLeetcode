@@ -102,7 +102,7 @@ class Solution {
             }
 
             // 收割结果，更新左边界
-            // 这里有时候如果左边界要更新到某种情况才停止，要用while更新
+            // 某些题目左边界要更新到某种情况才停止，则用while更新
             if (right - left == p.length()) {
                 if (valid == need.size())
                     ans.add(left);

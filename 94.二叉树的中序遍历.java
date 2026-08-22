@@ -58,6 +58,7 @@ class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         Stack<TreeNode> stk = new Stack<>();
+        // root != null 还有一部分是用来杜绝 root = root.right 的时候为 空，同时还没遍历完树的时候
         while (root != null || !stk.isEmpty()) {
             while (root != null) {
                 stk.push(root);

@@ -36,6 +36,9 @@ class Solution {
      * @date 20250307
      * 原地旋转，使用temp变量来保存被占用位置的值，然后循环，不过要保证所有元素都能被旋转到
      * https://leetcode.cn/problems/rotate-image/solutions/526980/xuan-zhuan-tu-xiang-by-leetcode-solution-vu3m/
+     * 
+     * 
+     * 简单说：分成四份，同一时间选择四个元素即可，然后重复
      */
     public void rotate(int[][] matrix) {
         int n = matrix.length;

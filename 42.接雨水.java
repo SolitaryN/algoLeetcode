@@ -62,7 +62,7 @@ class Solution {
             rmax = Math.max(rmax, height[r]);
 
             if (lmax <= rmax) {
-                sum = sum + (lmax - height[l]);
+                sum += (lmax - height[l]);
                 l++;
             } else {
                 sum += (rmax - height[r]);

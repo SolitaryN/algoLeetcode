@@ -34,12 +34,17 @@ class Solution {
         table.put('8', "tuv");
         table.put('9', "wxyz");
         
-        if (digits.length() == 0) return Collections.emptyList();
+        if (digits == null || digits.length() == 0) return Collections.emptyList();
 
         backtrack(0, digits, new StringBuilder());
         return ans;
     }
 
+    /**
+     * @param index  当前进行选择的节点下标
+     * @param digits
+     * @param builder
+     */
     void backtrack(int index, String digits, StringBuilder builder) {
         // 回溯算法的终止条件，进行结果收割
         if (index == digits.length()) {
