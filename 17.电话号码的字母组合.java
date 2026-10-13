@@ -24,7 +24,7 @@ class Solution {
      * 使用回溯，挨个字符必须进行选择，且不能选择为空。
      *  选择只能为对应数字的字母集合中的字符
      */
-    public List<String> letterCombinations(String digits) {
+    public List<String> letterCombinations1(String digits) {
         table.put('2', "abc");
         table.put('3', "def");
         table.put('4', "ghi");
@@ -60,6 +60,45 @@ class Solution {
             // builder.deleteCharAt(builder.length() - 1);
         }
     }
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Map<Character, String> table = new HashMap<>();
+        table.put('2', "abc");
+        table.put('3', "def");
+        table.put('4', "ghi");
+        table.put('5', "jkl");
+        table.put('6', "mno");
+        table.put('7', "pqrs");
+        table.put('8', "tuv");
+        table.put('9', "wxyz");
+
+        List<String> ans = new ArrayList<>();
+        StringBuilder build = new StringBuilder();
+
+        backtrace(ans, build, table, digits, 0);
+
+        return ans;
+    }
+
+    public void backtrace(List<String> ans, StringBuilder build, Map<Character, String> table, String digits, int index) {
+        if (index >= digits.length()) {
+            ans.add(build.toString());
+            return;
+        }
+
+        String chs = table.get(digits.charAt(index));
+        for (int i = 0; i < chs.length(); ++i) {
+            build.append(chs.charAt(i));
+            backtrace(ans, build, table, digits, index + 1);
+            build.deleteCharAt(build.length() - 1);
+        }
+    }
+
+
 }
 // @lc code=end
 
