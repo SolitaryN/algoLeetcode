@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
-    List<List<Integer>> ans = new ArrayList<>();
-    List<Integer> now = new ArrayList<>();
-
     /*
      * @date 20241009
      * 回溯时，两种选择，选择自己，选择下一个元素，收集的和等于 target 或 大于 target 时返回，也即剪枝操作
@@ -21,7 +18,9 @@ class Solution {
      * 对于一个元素来说，有两种选择：选择自己、选择下一个元素
      * 回溯结束条件：和等于 target 或 大于 target 或 下标越界
      */
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    List<List<Integer>> ans = new ArrayList<>();
+    List<Integer> now = new ArrayList<>();
+    public List<List<Integer>> combinationSum1(int[] candidates, int target) {
         helperDFS(0, candidates, target, 0);
         return ans;
     }
@@ -31,7 +30,6 @@ class Solution {
             ans.add(new ArrayList<>(now));
             return;
         }
-
         if(sum > target || index >= candidates.length)
             return;
         
@@ -40,9 +38,28 @@ class Solution {
         now.add(candidates[index]);
         helperDFS(index, candidates, target, sum + candidates[index]);
         now.remove(now.size() - 1);
-
         // 选择下一个元素
         helperDFS(index + 1, candidates, target, sum);
+    }
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        combinationHelper(candidates, target, ans, new ArrayList<>(), 0);
+        return ans;
+    }
+
+    public void combinationHelper(int[] candidates, int left, List<List<Integer>> ans, List<Integer> now, int i) {
+        if (left < 0 || i == candidates.length) return;
+        if (left == 0){
+             ans.add(new ArrayList<>(now));
+             return ;
+        }
+        
+        now.add(candidates[i]);
+        combinationHelper(candidates, left - candidates[i], ans, now, i);
+        now.remove(now.size() - 1);
+
+        combinationHelper(candidates, left, ans, now, i + 1);
     }
 }
 // @lc code=end
