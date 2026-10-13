@@ -58,7 +58,7 @@ class Solution {
      * 使用单调队列解决，单调队列是单调栈的增强版本，主要使用单调队列（单调栈）通过只和标杆数据对比，减少对比次数，进而提高计算速度。
      * 遇到可以抽象为 求在数组中某个方向的最值问题，就可以考虑使用单调栈，如果再加上窗口大小限制条件，此时可以使用单调队列
      */
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    public int[] maxSlidingWindow2(int[] nums, int k) {
         List<Integer> ans = new ArrayList<>();
         Deque<Integer> deque = new LinkedList<>();
         for (int i = 0; i < k; i++) {
@@ -85,6 +85,56 @@ class Solution {
 
         return ans.stream().mapToInt(Integer::intValue).toArray();
     }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+	List<Integer> ans = new ArrayList<>();
+	Deque<Integer> win = new LinkedList<>();
+	for (int i = 0; i < k; ++i) {
+		while (!win.isEmpty() && nums[win.peekLast()] < nums[i]) {
+			win.pollLast();
+		}
+		win.offer(i);
+	}
+	ans.add(nums[win.peekFirst()]);
+
+
+	for (int i = k; i < nums.length; ++i) {
+		while (!win.isEmpty() && nums[win.peekLast()] < nums[i]) {
+			win.pollLast();
+		}
+		win.offer(i);
+
+		while (!win.isEmpty() && win.peekFirst() < i - k + 1) {
+			win.pollFirst();
+		}
+		ans.add(nums[win.peekFirst()]);
+	}
+
+	return ans.stream().mapToInt(Integer::intValue).toArray();
+
+}
+
+    /**
+     * 大顶堆解法
+     * 堆解法 O (n log n)
+     */
+    public int[] maxSlidingWindow3(int[] nums, int k) {
+		PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+		List<Integer> ans = new ArrayList<>();
+
+		for (int i = 0; i < nums.length; ++i) {
+			q.add(new int[]{nums[i], i});
+			while (!q.isEmpty() && q.peek()[1] < i - k + 1) {
+				q.poll();
+			}
+
+			if (i >= k - 1) {
+				ans.add(q.peek()[0]);
+			}
+		}
+
+		return ans.stream().mapToInt(Integer::intValue).toArray();	
+	}
 }
 // @lc code=end
 

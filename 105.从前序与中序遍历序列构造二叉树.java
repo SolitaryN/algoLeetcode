@@ -71,8 +71,7 @@ class Solution1 {
             0, n - 1);
     }
 
-    public TreeNode build(int[] preorder, int[] inorder, int preStart, int preEnd,
-        int inStart, int inEnd) {
+    public TreeNode build(int[] preorder, int[] inorder, int preStart, int preEnd, int inStart, int inEnd) {
 
         // 递归结束条件，队列必须要有意义，这里改为inorder相关内容也可
         // if (inStart > inEnd) return null;
