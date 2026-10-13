@@ -22,7 +22,7 @@ class Solution {
      * 
      * @date 20250304
      */
-    public ListNode sortList(ListNode head) {
+    public ListNode sortList1(ListNode head) {
         // 节点为空 或 节点只有一个元素，则肯定有序，直接返回
         if (head == null || head.next == null) return head;
 
@@ -52,6 +52,49 @@ class Solution {
 
         return dummy.next;
     }
+
+        public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode pre = null;
+        while (fast != null && fast.next != null) {
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        pre.next = null;
+
+        ListNode a = sortList(head);
+        ListNode b = sortList(slow);
+        return merge(a, b);
+    }
+
+    public ListNode merge(ListNode a, ListNode b) {
+        ListNode dummy = new ListNode();
+        ListNode head = dummy;
+        while(a != null && b != null) {
+            if (a.val < b.val) {
+                dummy.next = a;
+                a = a.next;
+            } else {
+                dummy.next = b;
+                b = b.next;
+            }
+            dummy = dummy.next;
+        }
+        if (a == null) {
+            dummy.next = b;
+        } else {
+            dummy.next = a;
+        }
+
+        return head.next;
+    }
+
 }
 // @lc code=end
 
