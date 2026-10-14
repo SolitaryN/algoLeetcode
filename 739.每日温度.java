@@ -41,7 +41,7 @@ class Solution {
      * 单调栈模板，注意是从后往前遍历，这里也是单调递减栈
      * https://labuladong.online/algo/data-structure/monotonic-stack/
      */
-    public int[] dailyTemperatures(int[] temperatures) {
+    public int[] dailyTemperatures5(int[] temperatures) {
         int n = temperatures.length;
         int[] res = new int[n];
         // 这里放元素索引，而不是元素
@@ -57,6 +57,21 @@ class Solution {
             s.push(i); 
         }
         return res;
+    }
+
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack<Integer> stack = new Stack<>();
+        int[] ans = new int[temperatures.length];
+
+        for (int i = 0; i < temperatures.length; ++i) {
+            while (!stack.isEmpty() && temperatures[stack.peek()] < temperatures[i]) {
+                int be = stack.pop();
+                ans[be] = i - be;
+            }
+
+            stack.push(i);
+        }
+        return ans;
     }
 }
 // @lc code=end
