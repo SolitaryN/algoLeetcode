@@ -28,7 +28,7 @@ class Solution {
      * 则有 m + k + n = n + k + m
      * 此时就算它们不相交，最后走到的都是null，相等退出循环
      */
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    public ListNode getIntersectionNode1(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) return null;
 
         ListNode cursorA = headA;
@@ -40,6 +40,17 @@ class Solution {
         }
 
         return cursorA;
+    }
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode currA = headA, currB = headB;
+
+        while (currA != currB) {
+            currA = currA == null ? headB : currA.next;
+            currB = currB == null ? headA : currB.next;
+        }
+
+        return currA;
     }
 }
 // @lc code=end
