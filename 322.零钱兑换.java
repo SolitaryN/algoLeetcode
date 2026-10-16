@@ -25,14 +25,16 @@ class Solution {
         // 这里即为dp[i]的最大值,因为不能有比 1 元还小的硬币面值，这里只是假设有面值为1的硬币
         int[] dp = new int[amount + 1];
         Arrays.fill(dp, amount + 1);
-
         dp[0] = 0;
+
         // 遍历所有状态
         for (int i = 1; i < amount + 1; i++) {
             // 在多个选择中求所有选择的最小值
             for (int coin : coins) {
                 // 注意会出现子问题无解的情况，此时跳过
-                if (i - coin < 0) continue;
+                if (i - coin < 0){
+                    continue;
+                }
 
                 dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
             }
@@ -40,6 +42,31 @@ class Solution {
 
         // 如果还是初始值，则返回-1
         return (dp[amount] == amount + 1) ? -1 : dp[amount];
+    }
+
+    /**
+     * 也可通过回溯法来求解，时间复杂度较高，是指数级别的，主要是因为没有剪枝，导致重复计算
+     * 这里使用回溯法，主要是为了理解动态规划的状态转移方程，动态规划是对回溯法的优化
+     * @date 20250308
+     */
+    int ansMin = Integer.MAX_VALUE;
+    public int coinChange1(int[] coins, int amount) {
+        backtrace(coins, amount, 0, 0);
+        return ansMin == Integer.MAX_VALUE ? -1 : ansMin;
+    }
+
+    public void backtrace(int[] coins, int left, int index, int all) {
+        if (left < 0 || index >= coins.length) return;
+        if (left == 0) {
+            ansMin = Math.min(ansMin, all);
+            return;
+        }
+
+        // 剪枝：当前硬币数量已经 >= 当前最优解，没必要继续搜
+        if(all >= ansMin) return;
+
+        backtrace(coins, left - coins[index], index, all + 1);
+        backtrace(coins, left, index + 1, all);
     }
 }
 // @lc code=end
