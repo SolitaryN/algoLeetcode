@@ -21,7 +21,7 @@ class Solution {
      * @date 20250323
      * 主要就是判断依赖图中是否有环，可以使用 dfs 或 bfs
      */
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public boolean canFinish1(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];
         // index 表示课程号
         List<List<Integer>> graph = new ArrayList<>();
@@ -98,6 +98,53 @@ class Solution {
         flags[i] = -1; // 退出时，置为 -1，表示验证过没问题
 
         return true;
+    }
+
+
+
+    /**
+     * 这个算法名称叫做三色标记法，使用 DFS 判断有向图中是否有环
+     * 0 表示未访问，1 表示已访问，2 表示访问中
+     */
+    Boolean flag = true;  
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] visited = new int[numCourses];
+        Map<Integer, List<Integer>> map = buildMap(prerequisites);
+        for(int i = 0; i < numCourses; i++) {
+            dfsTrace(i, visited, map);
+        }
+        return flag;
+    }
+
+    Map<Integer, List<Integer>> buildMap(int[][] prereq) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        for(int[] temp : prereq) {
+            List<Integer> list = map.getOrDefault(temp[1], new ArrayList<>());
+            list.add(temp[0]);
+            map.put(temp[1], list);
+        }
+
+        return map;
+    }
+
+    void dfsTrace(int now, int[] visited, Map<Integer, List<Integer>> map) {
+        if (flag == false) {
+            return;
+        }
+        if (visited[now] == 1) {
+            return;
+        }
+        if (visited[now] == 2) {
+            flag = false;
+            return;
+        }
+
+        visited[now] = 2;
+        for ( int next : map.getOrDefault(now, Collections.emptyList())) {
+            dfsTrace(next, visited, map);
+        }
+        visited[now] = 1;
     }
 }
 // @lc code=end
