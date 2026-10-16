@@ -94,7 +94,6 @@ class Solution {
     int res = 0;
     // 记录当前元素的排名
     int rank = 0;
-
     void traverse(TreeNode root, int k) {
         // 当rank为k，说明已经找到，直接返回，不用遍历了
         if (root == null || rank == k)
