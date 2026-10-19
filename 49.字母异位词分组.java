@@ -42,11 +42,10 @@ class Solution {
         return new ArrayList<>(map.values());
     }
 
-
     public List<List<String>> groupAnagrams1(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
 
-        for(String s : strs){
+        for (String s : strs) {
             char[] sChars = s.toCharArray();
             Arrays.sort(sChars);
             String key = new String(sChars);
@@ -64,7 +63,7 @@ class Solution {
     public List<List<String>> groupAnagrams3(String[] strs) {
         Map<String, List<String>> ans = new HashMap<>();
 
-        for(String str : strs) {
+        for (String str : strs) {
             char[] chs = str.toCharArray();
             Arrays.sort(chs);
             String key = new String(chs);
@@ -92,8 +91,8 @@ class Solution {
         }
 
         List<List<String>> s = ans.entrySet().parallelStream()
-            .map(entry -> entry.getValue())
-            .collect(Collectors.toList());
+                .map(entry -> entry.getValue())
+                .collect(Collectors.toList());
 
         return s;
     }
@@ -116,10 +115,10 @@ class Solution {
         return ans.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
-    public List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams10(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
 
-        for (int i = 0;i < strs.length; ++i) {
+        for (int i = 0; i < strs.length; ++i) {
             String str = strs[i];
             char[] chs = str.toCharArray();
             Arrays.sort(chs);
@@ -130,6 +129,17 @@ class Solution {
         // return new ArrayList(map.values);
         return map.values().stream().collect(Collectors.toList());
     }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        return Arrays.stream(strs)
+                .collect(Collectors.groupingBy(str -> {
+                    char[] chs = str.toCharArray();
+                    Arrays.sort(chs);
+                    return new String(chs);
+                }))
+                .values()
+                .stream()
+                .collect(Collectors.toList());
+    }
 }
 // @lc code=end
-
