@@ -101,7 +101,7 @@ class Solution {
     /*
      * date: 260311
      */
-    public List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams9(String[] strs) {
         Map<String, List<String>> ans = new HashMap<>();
 
         for (String s : strs) {
@@ -114,6 +114,21 @@ class Solution {
         }
 
         return ans.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (int i = 0;i < strs.length; ++i) {
+            String str = strs[i];
+            char[] chs = str.toCharArray();
+            Arrays.sort(chs);
+            String key = new String(chs);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
+        }
+
+        // return new ArrayList(map.values);
+        return map.values().stream().collect(Collectors.toList());
     }
 }
 // @lc code=end
