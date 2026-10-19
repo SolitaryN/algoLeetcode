@@ -19,7 +19,7 @@ class Solution {
      * 该解法只适用于 数组中所有元素的绝对值要么为0，要么 >= 1 才可以，因为要求是子数组，元素需要连续。
      * 如果此时从后往前乘，此时最后面的元素为 1/2 ，此时可能是需要舍弃这个元素的
      */
-    public int maxProduct(int[] nums) {
+    public int maxProduct3(int[] nums) {
         int product = 1, n = nums.length;
         int ans = nums[0];
 
@@ -81,6 +81,26 @@ class Solution {
         int ans = (int) maxDp[0];
         for (int i = 1; i < length; ++i)
             ans = Math.max(ans, (int) maxDp[i]);
+        return ans;
+    }
+
+    /**
+     * @date 20261019
+     * 显而易见，也可以进一步压缩空间复杂度，使用两个变量保存前一个最大值和最小值即可
+     */
+    public int maxProduct(int[] nums) {
+        int ans = nums[0];
+        int[] dpMax = new int[nums.length];
+        int[] dpMin = new int[nums.length];
+        dpMax[0] = nums[0];
+        dpMin[0] = nums[0];
+
+        for (int i = 1; i < nums.length; ++i) {
+            dpMax[i] = Math.max(Math.max(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]), nums[i]);
+            dpMin[i] = Math.min(Math.min(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]), nums[i]);
+            ans = Math.max(ans, dpMax[i]);
+        }
+
         return ans;
     }
 }
