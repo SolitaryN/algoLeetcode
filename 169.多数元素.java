@@ -16,6 +16,7 @@ class Solution {
      * 排序，由于过半，则中间元素肯定就是
      * 
      * @date 20250325
+     * 
      */
     public int majorityElement2(int[] nums) {
         Arrays.sort(nums);
@@ -51,6 +52,9 @@ class Solution {
      * 由于一个数字过半，则最终经过一次遍历之后，则最终这个数肯定会大于1
      * 
      * @date 20250325
+     * 
+     * @date 20261019
+     * 如果题目不保证一定存在多数元素，摩尔投票结果只是候选，必须再加一轮循环统计次数校验，否则答案可能错。
      */
     public int majorityElement(int[] nums) {
         int count = 0, candidater = 0;
