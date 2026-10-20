@@ -38,7 +38,6 @@ class Solution {
      */
     public int uniquePaths(int m, int n) {
         int[][] ans = new int[m][n];
-
         IntStream.range(0, m).forEach(i -> ans[i][0] = 1);
         IntStream.range(0, n).forEach(i -> ans[0][i] = 1);
 
