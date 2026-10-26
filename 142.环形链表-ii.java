@@ -21,6 +21,11 @@ public class Solution {
      * @date 20240926
      * 
      * @date 20250304
+     * 
+     * @date 20261026
+     * 数学简要
+     * 设：起点到入环口距离 a，入环口到相遇点 b，相遇点绕回入口 c
+     * 2(a+b)=a+b+n(b+c) => a=c+(n-1)(b+c)
      */
     public ListNode detectCycle(ListNode head) {
         if(head == null) return null;
