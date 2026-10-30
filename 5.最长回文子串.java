@@ -28,7 +28,8 @@ class Solution {
     String palindrome(String s, int l, int r) {
         int len = s.length();
         while (l >= 0 && r < len && s.charAt(l) == s.charAt(r)) {
-            --l; ++r;
+            --l;
+            ++r;
         }
         return s.substring(l + 1, r);
     }
@@ -39,21 +40,21 @@ class Solution {
      * 
      * @date 20250325
      */
-    public String longestPalindrome(String s) {
+    public String longestPalindrome2(String s) {
         if (s == null || s.length() < 2)
             return s;
 
         int len = s.length();
-        int maxL = 0;    //最长回文串的起点
-        int maxR = 0;    //最长回文串的终点
-        int maxLen = 0;  //最长回文串的长度
+        int maxL = 0; // 最长回文串的起点
+        int maxR = 0; // 最长回文串的终点
+        int maxLen = 0; // 最长回文串的长度
 
         // 注意递推策略，先推 0~n, 后 0~n+1，因为后面的需要依赖 0~n 的计算结果
         boolean[][] dp = new boolean[len][len];
         for (int r = 1; r < len; r++) {
             for (int l = 0; l < r; l++) {
                 if (s.charAt(l) == s.charAt(r) &&
-                    (r == l + 1 || r == l + 2 || dp[l + 1][r - 1])) {
+                        (r == l + 1 || r == l + 2 || dp[l + 1][r - 1])) {
                     // r==l + 1 和 r==l + 2 判断是否是 basecase，类似于：aa 和 aba
                     // 属于边界情况，此时不看 dp[l + 1][r - 1]
                     dp[l][r] = true;
@@ -69,6 +70,26 @@ class Solution {
         }
         return s.substring(maxL, maxR + 1);
     }
+
+    public String longestPalindrome(String s) {
+        if (s == null || s.isEmpty()) return "";
+
+        int max = 1, l = 0, r = 0, len = s.length();
+        boolean[][] dp = new boolean[len][len];
+        IntStream.range(0, len).forEach(i -> dp[i][i] = true);
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[j][i] = (i - j == 1 || dp[j+1][i-1]) && s.charAt(j) == s.charAt(i);
+
+                if (dp[j][i]) {
+                    int cur = i - j + 1;
+                    if (cur >= max) {
+                        l = j; r = i; max = cur;
+                    }
+                }
+            }
+        }
+        return s.substring(l, r + 1);
+    }
 }
 // @lc code=end
-
