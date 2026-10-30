@@ -21,6 +21,9 @@ class Solution {
      * @date 20240930
      * 
      * @date 20250304
+     * 
+     * @date 20261030
+     * 拿个例子一举就出来了
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode();
