@@ -15,6 +15,7 @@ class Solution {
             dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
 
         @date 20250325
+        可以压缩 dp 空间，你懂的
      */
     public int minPathSum(int[][] grid) {
         int rn = grid.length, cn = grid[0].length;
